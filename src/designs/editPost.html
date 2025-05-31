@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Post - Meu Blog Simples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter como padrão para o corpo do documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Cor de fundo escura para o modo escuro, a mesma do blog e formulários */
+            background-color: #0f172a; /* Azul escuro quase preto */
+            color: #cbd5e1; /* Cinza claro para o texto principal */
+        }
+        /* Estilos para botões de formulário, os mesmos do blog */
+        .form-button {
+            background-color: #4fd1c5; /* Ciano/turquesa para botões */
+            color: #0f172a; /* Texto escuro nos botões */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .form-button:hover {
+            background-color: #38b2ac; /* Tom mais escuro ao passar o mouse */
+        }
+        /* Estilos para o link de navegação */
+        .nav-link {
+            color: #81e6d9; /* Um tom de ciano/turquesa para links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body class="dark flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="container mx-auto p-4 md:p-8 max-w-3xl">
+        <div class="mb-8">
+            <a href="#home" class="nav-link flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Voltar para o Blog
+            </a>
+        </div>
+
+        <main class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-full">
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">Editar Post</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="edit-post-title" class="block text-gray-300 text-sm font-bold mb-2">Título do Post:</label>
+                    <input type="text" id="edit-post-title" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Digite o título do seu post">
+                </div>
+                <div class="mb-4">
+                    <label for="edit-post-summary" class="block text-gray-300 text-sm font-bold mb-2">Resumo:</label>
+                    <textarea id="edit-post-summary" rows="3" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Escreva um breve resumo do seu post"></textarea>
+                </div>
+                <div class="mb-6">
+                    <label for="edit-post-full-content" class="block text-gray-300 text-sm font-bold mb-2">Conteúdo Completo:</label>
+                    <textarea id="edit-post-full-content" rows="10" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Escreva o conteúdo completo do seu post aqui"></textarea>
+                </div>
+                <button type="submit" class="form-button w-full">Salvar Alterações</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        // Função para carregar os dados do post (simulados)
+        function loadPostForEditing() {
+            // Em uma aplicação real, você obteria o ID do post da URL
+            // e faria uma requisição para carregar os dados do backend.
+            const postId = 1; // Exemplo: ID do post a ser editado
+
+            // Dados simulados de um post existente
+            const existingPost = {
+                id: postId,
+                title: 'Desvendando os Mistérios da IA Generativa',
+                summary: 'Uma exploração profunda sobre como a inteligência artificial generativa está moldando o futuro da criatividade e inovação em diversas áreas.',
+                fullContent: `
+                    A inteligência artificial generativa representa um dos avanços mais fascinantes e impactantes da tecnologia moderna. Ela tem o potencial de revolucionar indústrias, desde a criação de conteúdo artístico até o desenvolvimento de novas soluções científicas.
+
+                    Ao contrário das IAs tradicionais que se concentram em análise e classificação de dados, a IA generativa é capaz de produzir dados novos e originais que se assemelham aos dados de treinamento, mas não são cópias exatas. Isso é possível graças a arquiteturas complexas como as Redes Generativas Adversariais (GANs) e os modelos de transformadores.
+
+                    Aplicações Reais e Potenciais
+                    As aplicações da IA generativa são vastas. Na arte, ela pode criar pinturas, músicas e até mesmo roteiros de filmes. No design, auxilia na prototipagem rápida e na geração de variações de produtos. Na medicina, pode ser usada para simular moléculas e descobrir novos medicamentos.
+
+                    Além disso, a IA generativa está sendo explorada para aprimorar assistentes virtuais, gerar dados sintéticos para treinamento de outras IAs (especialmente em cenários onde dados reais são escassos ou sensíveis), e até mesmo na criação de ambientes virtuais imersivos.
+
+                    Desafios e Considerações Éticas
+                    Apesar de seu vasto potencial, a IA generativa também apresenta desafios significativos. Questões como a autoria de obras criadas por IA, a disseminação de informações falsas (deepfakes) e o viés nos dados de treinamento são preocupações éticas que precisam ser abordadas com seriedade.
+
+                    O futuro da IA generativa é promissor, mas exige um desenvolvimento responsável e um diálogo contínuo sobre suas implicações sociais e éticas. É uma ferramenta poderosa que, se usada com sabedoria, pode impulsionar a inovação e a criatividade humana a novos patamares.
+                `
+            };
+
+            // Preenche os campos do formulário com os dados do post existente
+            document.getElementById('edit-post-title').value = existingPost.title;
+            document.getElementById('edit-post-summary').value = existingPost.summary;
+            document.getElementById('edit-post-full-content').value = existingPost.fullContent.trim();
+        }
+
+        // Chama a função para carregar os dados do post quando a página carregar
+        document.addEventListener('DOMContentLoaded', loadPostForEditing);
+
+        // Adiciona um listener para o formulário de edição (apenas para demonstração)
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            // Aqui você adicionaria a lógica para salvar as alterações no backend
+            console.log('Post editado e salvo!');
+            // Você pode adicionar uma mensagem de sucesso ou redirecionar o usuário
+        });
+    </script>
+</body>
+</html>

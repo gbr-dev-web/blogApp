@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Posts - Meu Blog Simples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter como padrão para o corpo do documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Cor de fundo escura para o modo escuro, a mesma do blog e formulários */
+            background-color: #0f172a; /* Azul escuro quase preto */
+            color: #cbd5e1; /* Cinza claro para o texto principal */
+        }
+        /* Estilos para o link de navegação */
+        .nav-link {
+            color: #81e6d9; /* Um tom de ciano/turquesa para links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
+        }
+        /* Estilos para botões de ação (editar/remover) */
+        .action-button {
+            background-color: #4fd1c5; /* Ciano/turquesa para botões */
+            color: #0f172a; /* Texto escuro nos botões */
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .action-button:hover {
+            background-color: #38b2ac; /* Tom mais escuro ao passar o mouse */
+        }
+        .action-button.delete {
+            background-color: #ef4444; /* Vermelho para o botão de remover */
+            color: #fff;
+        }
+        .action-button.delete:hover {
+            background-color: #dc2626; /* Vermelho mais escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body class="dark flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="container mx-auto p-4 md:p-8">
+        <div class="mb-8">
+            <a href="#home" class="nav-link flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Voltar para o Blog
+            </a>
+        </div>
+
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">Meus Posts</h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-8">Todos os posts que você criou.</p>
+        </header>
+
+        <main id="my-blog-posts" class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            </main>
+    </div>
+
+    <script>
+        // Array de objetos simulando todos os posts do blog
+        const allBlogPosts = [
+            {
+                id: 1,
+                user: 'Sofia Oliveira',
+                title: 'Desvendando os Mistérios da IA Generativa',
+                summary: 'Uma exploração profunda sobre como a inteligência artificial generativa está moldando o futuro da criatividade e inovação em diversas áreas.',
+                date: '2025-05-31T09:00:00Z'
+            },
+            {
+                id: 2,
+                user: 'João Pereira',
+                title: 'O Caminho para uma Vida Sustentável: Pequenas Mudanças, Grande Impacto',
+                summary: 'Descubra hábitos simples e eficazes que você pode adotar hoje para contribuir com um futuro mais verde e sustentável para todos.',
+                date: '2025-05-30T14:00:00Z'
+            },
+            {
+                id: 3,
+                user: 'Sofia Oliveira', // Este post também é da Sofia
+                title: 'Produtividade sem Estresse: Técnicas para Otimizar seu Dia',
+                summary: 'Aprenda métodos comprovados para gerenciar seu tempo e tarefas de forma mais eficiente, reduzindo o estresse e aumentando sua produtividade.',
+                date: '2025-05-29T11:30:00Z'
+            },
+            {
+                id: 4,
+                user: 'Pedro Almeida',
+                title: 'A Arte da Fotografia Noturna: Capturando a Magia da Escuridão',
+                summary: 'Dicas e truques essenciais para fotógrafos que desejam explorar o fascinante mundo da fotografia noturna e criar imagens impressionantes.',
+                date: '2025-05-28T16:00:00Z'
+            },
+            {
+                id: 5,
+                user: 'Clara Rodrigues',
+                title: 'Bem-Estar Digital: Desconecte para Reconectar',
+                summary: 'Como encontrar o equilíbrio no uso da tecnologia, promovendo a saúde mental e permitindo uma conexão mais significativa com o mundo real.',
+                date: '2025-05-27T10:45:00Z'
+            },
+            {
+                id: 6,
+                user: 'Sofia Oliveira', // Mais um post da Sofia
+                title: 'Explorando o Universo da Culinária Vegana',
+                summary: 'Um guia completo para iniciantes na culinária vegana, com receitas deliciosas e dicas para uma transição suave e saborosa.',
+                date: '2025-05-26T13:00:00Z'
+            }
+        ];
+
+        // Simula o ID do usuário logado.
+        // Em uma aplicação real, este valor viria da sessão do usuário autenticado.
+        const currentLoggedInUser = 'Sofia Oliveira'; // Exemplo: usuário logado
+
+        // Função para formatar a data para exibição
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('pt-BR', options);
+        }
+
+        // Função para renderizar os posts do usuário logado
+        function renderMyBlogPosts() {
+            const myPostsContainer = document.getElementById('my-blog-posts');
+            myPostsContainer.innerHTML = ''; // Limpa o conteúdo existente
+
+            // Filtra os posts para mostrar apenas os do usuário logado
+            const userPosts = allBlogPosts.filter(post => post.user === currentLoggedInUser);
+
+            // Ordena os posts do mais novo para o mais antigo com base na data
+            const sortedPosts = [...userPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sortedPosts.length === 0) {
+                myPostsContainer.innerHTML = '<p class="text-center text-gray-400 text-xl col-span-full">Você ainda não criou nenhum post.</p>';
+                return;
+            }
+
+            sortedPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add(
+                    'bg-gray-800',        /* Fundo do cartão do post */
+                    'p-7',                /* Preenchimento interno */
+                    'rounded-xl',         /* Bordas mais arredondadas */
+                    'shadow-2xl',         /* Sombra mais proeminente */
+                    'border',             /* Borda sutil */
+                    'border-gray-700',    /* Cor da borda */
+                    'transform',          /* Habilita transformações CSS */
+                    'transition',         /* Habilita transições CSS */
+                    'duration-300',       /* Duração da transição */
+                    'hover:scale-105',    /* Efeito de escala ao passar o mouse */
+                    'hover:shadow-teal-500/30' /* Sombra com tom de teal ao passar o mouse */
+                );
+
+                // Nome do usuário
+                const userElement = document.createElement('p');
+                userElement.classList.add('text-sm', 'text-gray-400', 'mb-1');
+                userElement.textContent = `Por: ${post.user}`;
+                postElement.appendChild(userElement);
+
+                // Data de criação
+                const dateElement = document.createElement('p');
+                dateElement.classList.add('text-xs', 'text-gray-500', 'mb-3');
+                dateElement.textContent = `Criado em: ${formatDate(post.date)}`;
+                postElement.appendChild(dateElement);
+
+                // Título do post
+                const titleElement = document.createElement('h2');
+                titleElement.classList.add('text-3xl', 'font-bold', 'text-white', 'mb-4');
+                titleElement.textContent = post.title;
+                postElement.appendChild(titleElement);
+
+                // Resumo do post
+                const summaryElement = document.createElement('p');
+                summaryElement.classList.add('text-gray-300', 'mb-5');
+                summaryElement.textContent = post.summary;
+                postElement.appendChild(summaryElement);
+
+                // Contêiner para os botões de ação (agora no fundo do post)
+                const actionButtonsContainer = document.createElement('div');
+                actionButtonsContainer.classList.add('flex', 'justify-end', 'gap-3', 'mt-4'); // mt-4 para espaçamento do resumo
+
+                // Botão "Editar"
+                const editButton = document.createElement('a');
+                editButton.classList.add('action-button');
+                editButton.href = `#edit-post-${post.id}`; // Link para a página de edição
+                editButton.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    Editar
+                `;
+                actionButtonsContainer.appendChild(editButton);
+
+                // Botão "Remover"
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('action-button', 'delete');
+                deleteButton.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    Remover
+                `;
+                deleteButton.addEventListener('click', () => {
+                    // Lógica para remover o post (simulada)
+                    console.log(`Remover post com ID: ${post.id}`);
+                    // Em uma aplicação real, você faria uma requisição DELETE para o backend
+                    // e depois recarregaria a lista de posts.
+                    alert(`Função de remover para o post: "${post.title}" (ID: ${post.id})`);
+                });
+                actionButtonsContainer.appendChild(deleteButton);
+
+                postElement.appendChild(actionButtonsContainer);
+                myPostsContainer.appendChild(postElement);
+            });
+        }
+
+        // Chama a função para renderizar os posts do usuário quando a página carregar
+        document.addEventListener('DOMContentLoaded', renderMyBlogPosts);
+    </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Blog Simples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter como padrão para o corpo do documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Cor de fundo escura para o modo escuro */
+            background-color: #0f172a; /* Azul escuro quase preto */
+            color: #cbd5e1; /* Cinza claro para o texto principal */
+        }
+        /* Estilos para o link "Ler Mais" */
+        .read-more-link {
+            color: #81e6d9; /* Um tom de ciano/turquesa para links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .read-more-link:hover {
+            color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
+        }
+        /* Estilos para botões de formulário */
+        .form-button {
+            background-color: #4fd1c5; /* Ciano/turquesa para botões */
+            color: #0f172a; /* Texto escuro nos botões */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .form-button:hover {
+            background-color: #38b2ac; /* Tom mais escuro ao passar o mouse */
+        }
+        /* Estilos para o overlay do modal */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+            z-index: 999; /* Garante que o modal fique acima de outros elementos */
+        }
+        /* Estilos para o conteúdo do modal */
+        .modal-content {
+            z-index: 1000; /* Garante que o conteúdo do modal fique acima do overlay */
+        }
+    </style>
+</head>
+<body class="dark">
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">Blog Insights</h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-8">Descubra novas perspectivas e ideias.</p>
+            <nav id="auth-buttons" class="flex justify-center gap-4">
+                <button id="open-login-modal" class="form-button hidden flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                    Login
+                </button>
+                <button id="open-signup-modal" class="form-button hidden flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM12 14v6m-3-3h6"></path></svg>
+                    Cadastre-se
+                </button>
+
+                <button id="create-post-btn" class="form-button flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Criar Post
+                </button>
+                <button id="my-posts-btn" class="form-button flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m7 0V5a2 2 0 00-2-2H7a2 2 0 00-2 2v6m7 0V5a2 2 0 012-2h2a2 2 0 012 2v6m0 0V5a2 2 0 012-2h2a2 2 0 012 2v6"></path></svg>
+                    Meus Posts
+                </button>
+                <button id="logout-btn" class="form-button flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Sair
+                </button>
+            </nav>
+        </header>
+
+        <main id="blog-posts-v3" class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            </main>
+    </div>
+
+    <div id="login-modal" class="fixed inset-0 hidden flex items-center justify-center modal-overlay">
+        <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative modal-content">
+            <button id="close-login-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-gray-300 text-sm font-bold mb-2">Email:</label>
+                    <input type="email" id="login-email" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="seuemail@exemplo.com">
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-gray-300 text-sm font-bold mb-2">Senha:</label>
+                    <input type="password" id="login-password" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="********">
+                </div>
+                <button type="submit" class="form-button w-full">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="fixed inset-0 hidden flex items-center justify-center modal-overlay">
+        <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative modal-content">
+            <button id="close-signup-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">Cadastre-se</h2>
+            <form id="signup-form">
+                <div class="mb-4">
+                    <label for="signup-username" class="block text-gray-300 text-sm font-bold mb-2">Nome de Usuário:</label>
+                    <input type="text" id="signup-username" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Seu Nome">
+                </div>
+                <div class="mb-4">
+                    <label for="signup-email" class="block text-gray-300 text-sm font-bold mb-2">Email:</label>
+                    <input type="email" id="signup-email" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="seuemail@exemplo.com">
+                </div>
+                <div class="mb-6">
+                    <label for="signup-password" class="block text-gray-300 text-sm font-bold mb-2">Senha:</label>
+                    <input type="password" id="signup-password" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="********">
+                </div>
+                <button type="submit" class="form-button w-full">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Array de objetos simulando os posts do blog
+        const blogPostsV3 = [
+            {
+                id: 1,
+                user: 'Sofia Oliveira',
+                title: 'Desvendando os Mistérios da IA Generativa',
+                summary: 'Uma exploração profunda sobre como a inteligência artificial generativa está moldando o futuro da criatividade e inovação em diversas áreas.',
+                date: '2025-05-31T09:00:00Z' // Data de criação
+            },
+            {
+                id: 2,
+                user: 'João Pereira',
+                title: 'O Caminho para uma Vida Sustentável: Pequenas Mudanças, Grande Impacto',
+                summary: 'Descubra hábitos simples e eficazes que você pode adotar hoje para contribuir com um futuro mais verde e sustentável para todos.',
+                date: '2025-05-30T14:00:00Z' // Data de criação
+            },
+            {
+                id: 3,
+                user: 'Mariana Santos',
+                title: 'Produtividade sem Estresse: Técnicas para Otimizar seu Dia',
+                summary: 'Aprenda métodos comprovados para gerenciar seu tempo e tarefas de forma mais eficiente, reduzindo o estresse e aumentando sua produtividade.',
+                date: '2025-05-29T11:30:00Z' // Data de criação
+            },
+            {
+                id: 4,
+                user: 'Pedro Almeida',
+                title: 'A Arte da Fotografia Noturna: Capturando a Magia da Escuridão',
+                summary: 'Dicas e truques essenciais para fotógrafos que desejam explorar o fascinante mundo da fotografia noturna e criar imagens impressionantes.',
+                date: '2025-05-28T16:00:00Z' // Data de criação
+            },
+            {
+                id: 5,
+                user: 'Clara Rodrigues',
+                title: 'Bem-Estar Digital: Desconecte para Reconectar',
+                summary: 'Como encontrar o equilíbrio no uso da tecnologia, promovendo a saúde mental e permitindo uma conexão mais significativa com o mundo real.',
+                date: '2025-05-27T10:45:00Z' // Data de criação
+            },
+            {
+                id: 6,
+                user: 'Ricardo Lima',
+                title: 'Explorando o Universo da Culinária Vegana',
+                summary: 'Um guia completo para iniciantes na culinária vegana, com receitas deliciosas e dicas para uma transição suave e saborosa.',
+                date: '2025-05-26T13:00:00Z' // Data de criação
+            }
+        ];
+
+        // Variável para simular o estado de login
+        let isLoggedIn = true; // Começa como LOGADO por padrão
+
+        // Elementos dos botões de navegação
+        const openLoginBtn = document.getElementById('open-login-modal');
+        const openSignupBtn = document.getElementById('open-signup-modal');
+        const createPostBtn = document.getElementById('create-post-btn');
+        const myPostsBtn = document.getElementById('my-posts-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Função para atualizar a visibilidade dos botões com base no estado de login
+        function updateAuthButtons() {
+            if (isLoggedIn) {
+                openLoginBtn.classList.add('hidden');
+                openSignupBtn.classList.add('hidden');
+                createPostBtn.classList.remove('hidden');
+                myPostsBtn.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+                // Oculta os modais caso estejam abertos
+                loginModal.classList.add('hidden');
+                signupModal.classList.add('hidden');
+            } else {
+                openLoginBtn.classList.remove('hidden');
+                openSignupBtn.classList.remove('hidden');
+                createPostBtn.classList.add('hidden');
+                myPostsBtn.classList.add('hidden');
+                logoutBtn.classList.add('hidden');
+            }
+        }
+
+        // Função para simular o login
+        function simulateLogin() {
+            isLoggedIn = true;
+            updateAuthButtons();
+            console.log('Usuário logado!');
+            // Em uma aplicação real, você faria a autenticação real aqui
+        }
+
+        // Função para simular o logout
+        function simulateLogout() {
+            isLoggedIn = false;
+            updateAuthButtons();
+            console.log('Usuário deslogado!');
+            // Em uma aplicação real, você faria o logout real aqui
+        }
+
+        // Funções para formatar a data para exibição
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('pt-BR', options);
+        }
+
+        // Função para renderizar os posts do blog
+        function renderBlogPostsV3() {
+            const blogPostsContainer = document.getElementById('blog-posts-v3');
+            blogPostsContainer.innerHTML = ''; // Limpa o conteúdo existente
+
+            // Ordena os posts do mais novo para o mais antigo com base na data
+            const sortedPosts = [...blogPostsV3].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add(
+                    'bg-gray-800',        /* Fundo do cartão do post */
+                    'p-7',                /* Preenchimento interno */
+                    'rounded-xl',         /* Bordas mais arredondadas */
+                    'shadow-2xl',         /* Sombra mais proeminente */
+                    'border',             /* Borda sutil */
+                    'border-gray-700',    /* Cor da borda */
+                    'transform',          /* Habilita transformações CSS */
+                    'transition',         /* Habilita transições CSS */
+                    'duration-300',       /* Duração da transição */
+                    'hover:scale-105',    /* Efeito de escala ao passar o mouse */
+                    'hover:shadow-teal-500/30' /* Sombra com tom de teal ao passar o mouse */
+                );
+
+                // Nome do usuário
+                const userElement = document.createElement('p');
+                userElement.classList.add('text-sm', 'text-gray-400', 'mb-1');
+                userElement.textContent = `Por: ${post.user}`;
+                postElement.appendChild(userElement);
+
+                // Data de criação
+                const dateElement = document.createElement('p');
+                dateElement.classList.add('text-xs', 'text-gray-500', 'mb-3');
+                dateElement.textContent = `Criado em: ${formatDate(post.date)}`;
+                postElement.appendChild(dateElement);
+
+                // Título do post
+                const titleElement = document.createElement('h2');
+                titleElement.classList.add('text-3xl', 'font-bold', 'text-white', 'mb-4');
+                titleElement.textContent = post.title;
+                postElement.appendChild(titleElement);
+
+                // Resumo do post
+                const summaryElement = document.createElement('p');
+                summaryElement.classList.add('text-gray-300', 'mb-5');
+                summaryElement.textContent = post.summary;
+                postElement.appendChild(summaryElement);
+
+                // Link "Ler Mais"
+                const linkElement = document.createElement('a');
+                linkElement.classList.add('read-more-link', 'font-semibold', 'inline-flex', 'items-center');
+                linkElement.href = `#post-${post.id}`;
+                linkElement.textContent = 'Ler Mais ';
+                // Adiciona uma seta SVG para o link
+                linkElement.innerHTML += `<svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>`;
+                postElement.appendChild(linkElement);
+
+                blogPostsContainer.appendChild(postElement);
+            });
+        }
+
+        // Funções para controlar os modais
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+
+        const closeLoginBtn = document.getElementById('close-login-modal');
+        const closeSignupBtn = document.getElementById('close-signup-modal');
+
+        // Abrir modal de Login
+        openLoginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        // Fechar modal de Login
+        closeLoginBtn.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+
+        // Fechar modal de Login ao clicar fora do conteúdo
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+
+        // Abrir modal de Cadastro
+        openSignupBtn.addEventListener('click', () => {
+            signupModal.classList.remove('hidden');
+        });
+
+        // Fechar modal de Cadastro
+        closeSignupBtn.addEventListener('click', () => {
+            signupModal.classList.add('hidden');
+        });
+
+        // Fechar modal de Cadastro ao clicar fora do conteúdo
+        signupModal.addEventListener('click', (e) => {
+            if (e.target === signupModal) {
+                signupModal.classList.add('hidden');
+            }
+        });
+
+        // Adiciona listeners para os formulários de login/cadastro (simulados)
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Lógica de login simulada
+            simulateLogin();
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Lógica de cadastro simulada
+            console.log('Usuário cadastrado!');
+            // Após o cadastro, você pode simular o login
+            simulateLogin();
+        });
+
+        // Adiciona listener para o botão de logout
+        logoutBtn.addEventListener('click', simulateLogout);
+
+        // Chama a função para renderizar os posts e atualizar os botões quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBlogPostsV3();
+            updateAuthButtons(); // Atualiza os botões com base no estado inicial (logado)
+        });
+    </script>
+</body>
+</html>
