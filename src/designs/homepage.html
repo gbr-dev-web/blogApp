@@ -12,18 +12,6 @@
         background-color: #0f172a; /* Azul escuro quase preto */
         color: #cbd5e1; /* Cinza claro para o texto principal */
       }
-/* ------------------------------ */
-
-      /* Estilos para o link "Ler Mais" */
-      .read-more-link {
-        color: #81e6d9; /* Um tom de ciano/turquesa para links */
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-      .read-more-link:hover {
-        color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
-      }
-      /* Estilos para botões de formulário */
       .form-button {
         background-color: #4fd1c5; /* Ciano/turquesa para botões */
         color: #0f172a; /* Texto escuro nos botões */
@@ -35,15 +23,23 @@
       .form-button:hover {
         background-color: #38b2ac; /* Tom mais escuro ao passar o mouse */
       }
-      /* Estilos para o overlay do modal */
+      .read-more-link {
+        color: #81e6d9; /* Um tom de ciano/turquesa para links */
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .read-more-link:hover {
+        color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
+      }
       .modal-overlay {
-        background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+          background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
         z-index: 999; /* Garante que o modal fique acima de outros elementos */
       }
       /* Estilos para o conteúdo do modal */
       .modal-content {
         z-index: 1000; /* Garante que o conteúdo do modal fique acima do overlay */
       }
+          /* ------------------------------ */
     </style>
   </head>
   <body class="dark">
@@ -276,6 +272,7 @@
     </div>
 
     <script>
+      // #region posts
       // Array de objetos simulando os posts do blog
       const blogPostsV3 = [
         {
@@ -414,7 +411,8 @@
           blogPostsContainer.appendChild(postElement);
         });
       }
-
+      // #endregion
+      
       // Funções para controlar os modais
       const loginModal = document.getElementById("login-modal");
       const signupModal = document.getElementById("signup-modal");
