@@ -4,8 +4,12 @@ import { useFlash } from "../FlashProvider";
 
 import { Link } from "react-router-dom";
 
+// icons
 import { ReactComponent as LoginSvg } from "../../assets/Icons/Login.svg";
 import { ReactComponent as SignupSvg } from "../../assets/Icons/SignUp.svg";
+import { ReactComponent as CriarPostSvg } from "../../assets/Icons/CriarPost.svg";
+import { ReactComponent as MeusPostsSvg } from "../../assets/Icons/MeusPosts.svg";
+import { ReactComponent as LogoutSvg } from "../../assets/Icons/Logout.svg";
 
 import Button from "../Button";
 import Input from "../Input";
@@ -20,6 +24,8 @@ function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // efeito de ux pra focar no input
   useEffect(() => {
     if (showLoginModal) {
@@ -33,6 +39,7 @@ function Home() {
     }
   }, [showSignupModal]);
 
+  //#region posts
   // Função para formatar a data para exibição
   function formatDate(dateString) {
     const options = {
@@ -70,7 +77,9 @@ function Home() {
       setCurrentPage(currentPage - 1);
     }
   };
+  //#endregion
 
+  //#region login e cadastro
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
 
@@ -139,10 +148,14 @@ function Home() {
       if (!existingUsers) {
         throw new Error("Usuário inexistente.");
       }
-      if(user.password !== existingUsers[0].password){
+      if (user.password !== existingUsers[0].password) {
         throw new Error("Senha incorreta.");
       }
 
+      localStorage.setItem("user", JSON.stringify(existingUsers[0]));
+      if (localStorage.getItem("user")) {
+        setIsLoggedIn(true);
+      }
       showFlash("success", "Login realizado com sucesso!");
     } catch (err) {
       console.error("Erro ao fazer login:", err);
@@ -152,6 +165,7 @@ function Home() {
     }
   };
 
+  //#endregion
   return (
     <div className="container mx-auto p-4 md:p-8">
       <header className="text-center mb-16">
@@ -163,16 +177,38 @@ function Home() {
         </p>
         {/* buttons */}
         <nav className="flex justify-center gap-4">
-          <Button
-            Icon={LoginSvg}
-            text={"Login"}
-            onClick={() => setShowLoginModal(true)}
-          />
-          <Button
-            Icon={SignupSvg}
-            text={"Cadastre-se"}
-            onClick={() => setShowSignupModal(true)}
-          />
+          {isLoggedIn ? (
+            <>
+              <Button
+                Icon={LoginSvg}
+                text={"Login"}
+                onClick={() => setShowLoginModal(true)}
+              />
+              <Button
+                Icon={SignupSvg}
+                text={"Cadastre-se"}
+                onClick={() => setShowSignupModal(true)}
+              />
+            </>
+          ) : (
+            <>
+              <Button
+                Icon={CriarPostSvg}
+                text={"Criar Post"}
+                // onClick={() => funcaoai(true)}
+              />
+              <Button
+                Icon={MeusPostsSvg}
+                text={"Meus Posts"}
+                // onClick={() => funcaoai(true)}
+              />
+              <Button
+                Icon={LogoutSvg}
+                text={"Sair"}
+                // onClick={() => funcaoai(true)}
+              />
+            </>
+          )}
         </nav>
       </header>
 
@@ -188,7 +224,7 @@ function Home() {
               Criado em: {formatDate(post.date)}
             </p>
             <h2 className="text-3xl font-bold text-white mb-4">{post.title}</h2>
-            <p className="text-gray-300 mb-5">{post.summary}</p> {/* resumo */}
+            <p className="text-gray-300 mb-5">{post.summary}</p>
             <Link
               to={`/post/${post.id}`}
               className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center"
@@ -235,7 +271,7 @@ function Home() {
 
       {/* Modal Login */}
       {showLoginModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[999] bg-black bg-opacity-70 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[999]">
           <div className="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative z-[1000]">
             <button
               onClick={() => setShowLoginModal(false)}
