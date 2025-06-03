@@ -1,45 +1,28 @@
+import { useParams, Link } from "react-router-dom";
+
+import TextoMarkdown from "../TextToMarkdown";
+
+import db from "../../data/db.json";
+
 function Post() {
+  const { id } = useParams();
 
-     // Objeto simulando o conteúdo completo de um post
-        // Em uma aplicação real, este conteúdo viria de um backend,
-        // possivelmente através de um ID na URL.
-        const samplePost = {
-            id: 1,
-            user: 'Sofia Oliveira',
-            title: 'Desvendando os Mistérios da IA Generativa',
-            date: '2025-05-31T09:00:00Z',
-            fullContent: `
-                <p class="mb-4">A inteligência artificial generativa representa um dos avanços mais fascinantes e impactantes da tecnologia moderna. Ela tem o potencial de revolucionar indústrias, desde a criação de conteúdo artístico até o desenvolvimento de novas soluções científicas.</p>
-                <p class="mb-4">Ao contrário das IAs tradicionais que se concentram em análise e classificação de dados, a IA generativa é capaz de produzir dados novos e originais que se assemelham aos dados de treinamento, mas não são cópias exatas. Isso é possível graças a arquiteturas complexas como as Redes Generativas Adversariais (GANs) e os modelos de transformadores.</p>
-                <h3 class="text-2xl font-semibold text-white mb-3 mt-6">Aplicações Reais e Potenciais</h3>
-                <p class="mb-4">As aplicações da IA generativa são vastas. Na arte, ela pode criar pinturas, músicas e até mesmo roteiros de filmes. No design, auxilia na prototipagem rápida e na geração de variações de produtos. Na medicina, pode ser usada para simular moléculas e descobrir novos medicamentos.</p>
-                <p class="mb-4">Além disso, a IA generativa está sendo explorada para aprimorar assistentes virtuais, gerar dados sintéticos para treinamento de outras IAs (especialmente em cenários onde dados reais são escassos ou sensíveis), e até mesmo na criação de ambientes virtuais imersivos.</p>
-                <h3 class="text-2xl font-semibold text-white mb-3 mt-6">Desafios e Considerações Éticas</h3>
-                <p class="mb-4">Apesar de seu vasto potencial, a IA generativa também apresenta desafios significativos. Questões como a autoria de obras criadas por IA, a disseminação de informações falsas (deepfakes) e o viés nos dados de treinamento são preocupações éticas que precisam ser abordadas com seriedade.</p>
-                <p>O futuro da IA generativa é promissor, mas exige um desenvolvimento responsável e um diálogo contínuo sobre suas implicações sociais e éticas. É uma ferramenta poderosa que, se usada com sabedoria, pode impulsionar a inovação e a criatividade humana a novos patamares.</p>
-            `
-        };
+  const samplePost = db.blogPosts.find((post) => post.id === id);
 
-        // Função para formatar a data para exibição
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            return new Date(dateString).toLocaleDateString('pt-BR', options);
-        }
+  //   Função para formatar a data para exibição
+  function formatDate(dateString) {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleString("pt-BR", options);
+  }
 
-        // Função para carregar e exibir o conteúdo do post
-        function loadPostContent() {
-            document.getElementById('post-title-tag').textContent = `${samplePost.title} - Meu Blog Simples`;
-            document.getElementById('post-full-title').textContent = samplePost.title;
-            document.getElementById('post-user-date').textContent = `Por: ${samplePost.user} | Criado em: ${formatDate(samplePost.date)}`;
-            document.getElementById('post-full-content').innerHTML = samplePost.fullContent;
-        }
-
-        // Chama a função para carregar o post quando a página carregar
-        loadPostContent();        
   return (
     <div class="container mx-auto p-4 md:p-8 max-w-3xl">
       <div class="mb-8">
-        <a href="#home" class="nav-link flex items-center gap-2">
+        <Link to={"/"} class="nav-link flex items-center gap-2">
           <svg
             class="w-5 h-5"
             fill="none"
@@ -55,19 +38,19 @@ function Post() {
             ></path>
           </svg>
           Voltar para o Blog
-        </a>
+        </Link>
       </div>
 
       <main class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
-        <p id="post-user-date" class="text-sm text-gray-400 mb-3"></p>
-        <h1
-          id="post-full-title"
-          class="text-4xl md:text-5xl font-bold text-white mb-6"
-        >wtf</h1>
-        <div
-          id="post-full-content"
-          class="text-gray-300 leading-relaxed text-lg"
-        ></div>
+        <p class="text-sm text-gray-400 mb-3">
+          Por: {samplePost.user} | Criado em: {formatDate(samplePost.date)}
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          {samplePost.title}
+        </h1>
+        <div class="text-gray-300 leading-relaxed text-lg">
+          <TextoMarkdown text={samplePost.fullContent} />
+        </div>
       </main>
     </div>
   );

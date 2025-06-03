@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 
+import { useFlash } from "../FlashProvider";
+
 import { Link } from "react-router-dom";
 
 import { ReactComponent as LoginSvg } from "../../assets/Icons/Login.svg";
 import { ReactComponent as SignupSvg } from "../../assets/Icons/SignUp.svg";
 
 import Button from "../Button";
+import Input from "../Input";
+import Label from "../Label";
 
 import db from "../../data/db.json";
 
 function Home() {
+  // "retorne o showFlash que foi compartilhado pelo FlashContext.Provider e o nomeie com o seu proprio nome"
+  const { showFlash } = useFlash();
   // Estados para controle dos modais
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -20,7 +26,7 @@ function Home() {
       document.getElementById("login-email")?.focus();
     }
   }, [showLoginModal]);
-  
+
   useEffect(() => {
     if (showSignupModal) {
       document.getElementById("signup-username")?.focus();
@@ -44,7 +50,7 @@ function Home() {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  const postsPerPage = 6; // Quantidade de posts por página
+  const postsPerPage = 4; // Quantidade de posts por página
 
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar a página atual
 
@@ -62,6 +68,87 @@ function Home() {
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const newUser = {
+        username: e.target["signup-username"].value,
+        email: e.target["signup-email"].value,
+        password: e.target["signup-password"].value,
+        repeatedPassword: e.target["signup-repeated-password"].value,
+      };
+
+      if (newUser.password !== newUser.repeatedPassword) {
+        throw new Error("As senhas não coincidem.");
+      }
+
+      // Verifica se já existe usuário com esse email
+      const checkRes = await fetch(
+        `http://localhost:3001/users?email=${newUser.email}`
+      );
+      const existingUsers = await checkRes.json();
+
+      if (existingUsers.length > 0) {
+        throw new Error("Usuário já existe.");
+      }
+
+      const res = await fetch("http://localhost:3001/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: newUser.username,
+          email: newUser.email,
+          password: newUser.password,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Erro ao criar usuário.");
+      }
+
+      showFlash("success", "Usuário criado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao cadastrar:", err);
+      showFlash("error", err.message || "Erro de conexão com o servidor.");
+    } finally {
+      setShowSignupModal(false);
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const user = {
+        email: e.target["login-email"].value,
+        password: e.target["login-password"].value,
+      };
+
+      // Verifica se já existe usuário com esse email
+      const checkRes = await fetch(
+        `http://localhost:3001/users?email=${user.email}`
+      );
+      const existingUsers = await checkRes.json();
+
+      if (!existingUsers) {
+        throw new Error("Usuário inexistente.");
+      }
+      if(user.password !== existingUsers[0].password){
+        throw new Error("Senha incorreta.");
+      }
+
+      showFlash("success", "Login realizado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao fazer login:", err);
+      showFlash("error", err.message || "Erro de conexão com o servidor.");
+    } finally {
+      setShowLoginModal(false);
     }
   };
 
@@ -88,6 +175,7 @@ function Home() {
           />
         </nav>
       </header>
+
       {/* posts */}
       <main className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         {currentPosts.map((post) => (
@@ -124,6 +212,7 @@ function Home() {
           </div>
         ))}
       </main>
+
       {/* Navegação da paginação */}
       {sortedPosts.length > postsPerPage && (
         <div className="flex justify-center mt-8 gap-4">
@@ -154,40 +243,35 @@ function Home() {
             >
               &times;
             </button>
+
             <h2 className="text-3xl font-bold text-white mb-6 text-center">
               Login
             </h2>
-            <form>
+
+            <form onSubmit={handleLoginSubmit}>
               <div className="mb-4">
-                <label
-                  htmlFor="login-email"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="login-email"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="seuemail@exemplo.com"
+                <Label htmlFor="login-email" text={"Email:"} />
+
+                <Input
+                  type={"email"}
+                  id={"login-email"}
+                  placeholder={"seuemail@exemplo.com"}
                 />
               </div>
+
               <div className="mb-6">
-                <label
-                  htmlFor="login-password"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Senha:
-                </label>
-                <input
-                  type="password"
-                  id="login-password"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="password"
+                <Label htmlFor={"login-password"} text={"Senha:"} />
+
+                <Input
+                  type={"password"}
+                  id={"login-password"}
+                  placeholder={"password"}
                 />
               </div>
+
               <Button text={"Entrar"} className={"w-full"} />
             </form>
+
             <p className="text-center text-gray-400 text-sm mt-6">
               Não tem uma conta?{" "}
               <button
@@ -218,73 +302,50 @@ function Home() {
             <h2 className="text-3xl font-bold text-white mb-6 text-center">
               Cadastre-se
             </h2>
-            <form>
+            <form onSubmit={handleSignupSubmit}>
               <div className="mb-4">
-                <label
-                  htmlFor="signup-username"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Nome de Usuário:
-                </label>
-                <input
-                  type="text"
-                  id="signup-username"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="Seu Nome"
+                <Label htmlFor="signup-username" text={"Nome de Usuário:"} />
+
+                <Input
+                  type={"text"}
+                  id={"signup-username"}
+                  placeholder={"Seu Nome"}
                 />
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="signup-email"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Email:
-                </label>
+                <Label htmlFor="signup-email" text={"Email:"} />
 
-                <input
-                  type="email"
-                  id="signup-email"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="seuemail@exemplo.com"
+                <Input
+                  type={"email"}
+                  id={"signup-email"}
+                  placeholder={"seuemail@exemplo.com"}
                 />
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="signup-password"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Senha:
-                </label>
-                <input
-                  type="password"
-                  id="signup-password"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="Password"
+                <Label htmlFor="signup-password" text={"Senha:"} />
+
+                <Input
+                  type={"password"}
+                  id={"signup-password"}
+                  placeholder={"Password"}
                 />
               </div>
 
               <div className="mb-4">
-                <label
+                <Label
                   htmlFor="signup-repeated-password"
-                  className="block text-gray-300 text-sm font-bold mb-2"
-                >
-                  Repetir Senha:
-                </label>
-                <input
-                  type="password"
-                  id="signup-repeated-password"
-                  className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  placeholder="Repeat Password"
+                  text={"RepetirSenha:"}
+                />
+
+                <Input
+                  type={"password"}
+                  id={"signup-repeated-password"}
+                  placeholder={"Repeat Password"}
                 />
               </div>
 
-              <button
-                type="submit"
-                className="bg-teal-400 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-colors duration-300 hover:bg-teal-500 w-full"
-              >
-                Criar Conta
-              </button>
+              <Button text={"Criar Conta"} className={"w-full"} />
             </form>
             <p className="text-center text-gray-400 text-sm mt-6">
               Já tem uma conta?{" "}
