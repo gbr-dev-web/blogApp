@@ -14,6 +14,7 @@ import { ReactComponent as LogoutSvg } from "../../assets/Icons/Logout.svg";
 import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
+import Loader from "../Loader";
 
 import db from "../../data/db.json";
 
@@ -23,6 +24,8 @@ function Home() {
   // Estados para controle dos modais
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -84,6 +87,7 @@ function Home() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const newUser = {
         username: e.target["signup-username"].value,
         email: e.target["signup-email"].value,
@@ -121,11 +125,18 @@ function Home() {
         throw new Error("Erro ao criar usuário.");
       }
 
+      localStorage.setItem("user", JSON.stringify(existingUsers[0]));
+      if (localStorage.getItem("user")) {
+        setIsLoggedIn(true);
+      } else {
+        throw new Error('não foi possivel logar, tente fazer o login');
+      }
       showFlash("success", "Usuário criado com sucesso!");
     } catch (err) {
       console.error("Erro ao cadastrar:", err);
       showFlash("error", err.message || "Erro de conexão com o servidor.");
     } finally {
+      setIsLoading(false);
       setShowSignupModal(false);
     }
   };
@@ -134,6 +145,7 @@ function Home() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const user = {
         email: e.target["login-email"].value,
         password: e.target["login-password"].value,
@@ -155,17 +167,32 @@ function Home() {
       localStorage.setItem("user", JSON.stringify(existingUsers[0]));
       if (localStorage.getItem("user")) {
         setIsLoggedIn(true);
+      } else {
+        throw new Error('não foi possivel logar, tente fazer o login');
       }
       showFlash("success", "Login realizado com sucesso!");
     } catch (err) {
       console.error("Erro ao fazer login:", err);
       showFlash("error", err.message || "Erro de conexão com o servidor.");
     } finally {
+      setIsLoading(false);
       setShowLoginModal(false);
     }
   };
-
   //#endregion
+
+  //#region logout, criar post e meus posts
+  function Logout() {
+    localStorage.removeItem("user");
+    if (!localStorage.getItem("user")) {
+      setIsLoggedIn(false);
+      showFlash("success", "Logout realizado com sucesso!");
+    } else {
+      showFlash("error", "Erro ao fazer logout!");
+    }
+  }
+
+  
   return (
     <div className="container mx-auto p-4 md:p-8">
       <header className="text-center mb-16">
@@ -177,7 +204,7 @@ function Home() {
         </p>
         {/* buttons */}
         <nav className="flex justify-center gap-4">
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <>
               <Button
                 Icon={LoginSvg}
@@ -205,7 +232,7 @@ function Home() {
               <Button
                 Icon={LogoutSvg}
                 text={"Sair"}
-                // onClick={() => funcaoai(true)}
+                onClick={() => Logout(true)}
               />
             </>
           )}
@@ -329,6 +356,7 @@ function Home() {
       {showSignupModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[999]">
           <div className="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative z-[1000]">
+            <Loader isLoading={isLoading} />
             <button
               onClick={() => setShowSignupModal(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl font-bold"
