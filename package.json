@@ -20,6 +20,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "unified": "^11.0.5",
+    "uuid": "^11.1.0",
     "vfile": "^6.0.3",
     "web-vitals": "^2.1.4"
   },

@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef } from "react";
 
 // Contexto para FlashMessage
 const FlashContext = createContext();
 
 // Componente FlashMessage
-function FlashMessage({ type = "success", message, onClose }) {
+function FlashMessage({ type = "success", message, onClose}) {
   const colors = {
     success: "bg-teal-600",
     error: "bg-red-600",
@@ -29,28 +29,30 @@ function FlashMessage({ type = "success", message, onClose }) {
 }
 
 export function FlashProvider({ children }) {
-  const [flash, setFlash] = useState(null);
-
-  // Função para exibir as mensagens
-  const showFlash = (type, message) => {
-    setFlash({ type, message });
-    setTimeout(() => setFlash(null), 3000); // some automático após 3s
-  };
-// renderiza as mensagens
-  return (
-    // "O valor que quero compartilhar com todos os filhos é a função showFlash."
-    <FlashContext.Provider value={{ showFlash }}>
-      {children} {/* envolve a aplicação inteira */}
-      {flash && (
-        <FlashMessage
-          type={flash.type}
-          message={flash.message}
-          onClose={() => setFlash(null)}
-        />
-      )}
-    </FlashContext.Provider>
-  );
-}
+    const [flash, setFlash] = useState(null);
+    const timeoutRef = useRef(null);
+  
+    const showFlash = (type, message, timeout = 3000) => {
+      setFlash({ type, message });
+      
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      
+      timeoutRef.current = setTimeout(() => setFlash(null), timeout);
+    };
+  
+    return (
+      <FlashContext.Provider value={{ showFlash }}>
+        {children}
+        {flash && (
+          <FlashMessage
+            type={flash.type}
+            message={flash.message}
+            onClose={() => setFlash(null)}
+          />
+        )}
+      </FlashContext.Provider>
+    );
+  }
 
 export function useFlash() {
   return useContext(FlashContext);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useFlash } from "../FlashProvider";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // icons
 import { ReactComponent as LoginSvg } from "../../assets/Icons/Login.svg";
@@ -16,18 +16,31 @@ import Input from "../Input";
 import Label from "../Label";
 import Loader from "../Loader";
 
-import db from "../../data/db.json";
-
 function Home() {
   // "retorne o showFlash que foi compartilhado pelo FlashContext.Provider e o nomeie com o seu proprio nome"
   const { showFlash } = useFlash();
+
+  const navigate = useNavigate(); // navegacao de paginas
+
   // Estados para controle dos modais
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCheckingLogin, setIsCheckingLogin] = useState(true); // Estado para controlar a verificação de login
+
+  const [blogPosts, setBlogPosts] = useState([]);
+
+  // verifica se o usuario esta logado
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsLoggedIn(true);
+    }
+    setIsCheckingLogin(false);
+  }, []);
 
   // efeito de ux pra focar no input
   useEffect(() => {
@@ -53,14 +66,29 @@ function Home() {
     return new Date(dateString).toLocaleString("pt-BR", options);
   }
 
-  const blogPosts = db.blogPosts;
+  // busca os posts no db via fetch
+  useEffect(() => {
+    fetch("http://localhost:3001/blogPosts")
+      .then((response) => {
+        if (!response.ok) throw new Error("Erro ao buscar posts");
+        return response.json();
+      })
+      .then((data) => {
+        setBlogPosts(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, []);
 
   // ordena os itens do mais novo para o mais antigo
   const sortedPosts = [...blogPosts].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  const postsPerPage = 4; // Quantidade de posts por página
+  const postsPerPage = 6; // Quantidade de posts por página
 
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar a página atual
 
@@ -82,7 +110,7 @@ function Home() {
   };
   //#endregion
 
-  //#region login e cadastro
+  //#region login, signup e logout
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
 
@@ -129,7 +157,7 @@ function Home() {
       if (localStorage.getItem("user")) {
         setIsLoggedIn(true);
       } else {
-        throw new Error('não foi possivel logar, tente fazer o login');
+        throw new Error("não foi possivel logar, tente fazer o login");
       }
       showFlash("success", "Usuário criado com sucesso!");
     } catch (err) {
@@ -168,7 +196,7 @@ function Home() {
       if (localStorage.getItem("user")) {
         setIsLoggedIn(true);
       } else {
-        throw new Error('não foi possivel logar, tente fazer o login');
+        throw new Error("não foi possivel logar, tente fazer o login");
       }
       showFlash("success", "Login realizado com sucesso!");
     } catch (err) {
@@ -179,9 +207,7 @@ function Home() {
       setShowLoginModal(false);
     }
   };
-  //#endregion
 
-  //#region logout, criar post e meus posts
   function Logout() {
     localStorage.removeItem("user");
     if (!localStorage.getItem("user")) {
@@ -191,10 +217,12 @@ function Home() {
       showFlash("error", "Erro ao fazer logout!");
     }
   }
+  //#endregion
 
-  
   return (
     <div className="container mx-auto p-4 md:p-8">
+      <Loader isLoading={isLoading} />
+
       <header className="text-center mb-16">
         <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
           Blog App
@@ -204,7 +232,9 @@ function Home() {
         </p>
         {/* buttons */}
         <nav className="flex justify-center gap-4">
-          {!isLoggedIn ? (
+          {isCheckingLogin ? (
+            <Loader isLoading={true} />
+          ) : !isLoggedIn ? (
             <>
               <Button
                 Icon={LoginSvg}
@@ -222,18 +252,14 @@ function Home() {
               <Button
                 Icon={CriarPostSvg}
                 text={"Criar Post"}
-                // onClick={() => funcaoai(true)}
+                onClick={() => navigate("/novopost")}
               />
               <Button
                 Icon={MeusPostsSvg}
                 text={"Meus Posts"}
-                // onClick={() => funcaoai(true)}
+                onClick={() => navigate("/meusposts")}
               />
-              <Button
-                Icon={LogoutSvg}
-                text={"Sair"}
-                onClick={() => Logout(true)}
-              />
+              <Button Icon={LogoutSvg} text={"Sair"} onClick={() => Logout()} />
             </>
           )}
         </nav>
@@ -300,6 +326,7 @@ function Home() {
       {showLoginModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[999]">
           <div className="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative z-[1000]">
+          <Loader isLoading={isLoading} />
             <button
               onClick={() => setShowLoginModal(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl font-bold"

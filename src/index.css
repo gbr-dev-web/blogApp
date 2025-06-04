@@ -1,10 +1,35 @@
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0f172a; /* Azul escuro quase preto */
-    color: #cbd5e1; /* Cinza claro para o texto principal */
+  font-family: "Inter", sans-serif;
+  background-color: #0f172a; /* Azul escuro quase preto */
+  color: #cbd5e1; /* Cinza claro para o texto principal */
 }
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+/* Estilo da barra */
+textarea::-webkit-scrollbar {
+  width: 8px; /* largura da barra */
+}
+
+/* Fundo da barra */
+textarea::-webkit-scrollbar-track {
+  background: #374151; /* bg-gray-700 */
+  border-radius: 10px;
+}
+
+/* "Botão" de rolagem */
+textarea::-webkit-scrollbar-thumb {
+  background-color: #a8a8a8; /* teal-400 */
+  border-radius: 10px;
+  border: 2px solid #374151; /* para dar espaço interno */
+}
+
+/* Cursor pointer ao passar sobre a barra */
+textarea::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+
