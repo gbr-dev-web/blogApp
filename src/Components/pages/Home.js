@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-
 import { useFlash } from "../FlashProvider";
-
 import { Link, useNavigate } from "react-router-dom";
 
 // icons
@@ -15,6 +13,9 @@ import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
 import Loader from "../Loader";
+import renderMarkdown from "../RenderMarkdown";
+
+import DOMPurify from "dompurify";
 
 function Home() {
   // "retorne o showFlash que foi compartilhado pelo FlashContext.Provider e o nomeie com o seu proprio nome"
@@ -116,20 +117,34 @@ function Home() {
 
     try {
       setIsLoading(true);
-      const newUser = {
-        username: e.target["signup-username"].value,
-        email: e.target["signup-email"].value,
-        password: e.target["signup-password"].value,
-        repeatedPassword: e.target["signup-repeated-password"].value,
-      };
+      // Sanitiza os dados do formulário
+      const username = DOMPurify.sanitize(
+        e.target["signup-username"].value.trim()
+      );
+      const email = DOMPurify.sanitize(e.target["signup-email"].value.trim());
+      const password = DOMPurify.sanitize(e.target["signup-password"].value);
+      const repeatedPassword = DOMPurify.sanitize(
+        e.target["signup-repeated-password"].value
+      );
 
-      if (newUser.password !== newUser.repeatedPassword) {
+      // Validações simples
+      if (!username || !email || !password || !repeatedPassword) {
+        throw new Error("Por favor, preencha todos os campos.");
+      }
+
+      if (password !== repeatedPassword) {
         throw new Error("As senhas não coincidem.");
+      }
+
+      // Validação básica de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        throw new Error("Email inválido.");
       }
 
       // Verifica se já existe usuário com esse email
       const checkRes = await fetch(
-        `http://localhost:3001/users?email=${newUser.email}`
+        `http://localhost:3001/users?email=${email}`
       );
       const existingUsers = await checkRes.json();
 
@@ -143,9 +158,9 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: newUser.username,
-          email: newUser.email,
-          password: newUser.password,
+          username,
+          email,
+          password,
         }),
       });
 
@@ -174,21 +189,29 @@ function Home() {
 
     try {
       setIsLoading(true);
-      const user = {
-        email: e.target["login-email"].value,
-        password: e.target["login-password"].value,
-      };
+      // Sanitiza inputs
+      const email = DOMPurify.sanitize(e.target["login-email"].value.trim());
+      const password = DOMPurify.sanitize(e.target["login-password"].value);
 
+      // Validação simples
+      if (!email || !password) {
+        throw new Error("Por favor, preencha todos os campos.");
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        throw new Error("Email inválido.");
+      }
       // Verifica se já existe usuário com esse email
       const checkRes = await fetch(
-        `http://localhost:3001/users?email=${user.email}`
+        `http://localhost:3001/users?email=${email}`
       );
       const existingUsers = await checkRes.json();
 
       if (!existingUsers) {
         throw new Error("Usuário inexistente.");
       }
-      if (user.password !== existingUsers[0].password) {
+      if (password !== existingUsers[0].password) {
         throw new Error("Senha incorreta.");
       }
 
@@ -272,12 +295,19 @@ function Home() {
             key={post.id}
             className="bg-gray-800 p-7 rounded-xl shadow-2xl border border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-teal-500/30"
           >
-            <p className="text-sm text-gray-400 mb-1">Por: {post.user}</p>
+            <p className="text-sm text-gray-400 mb-1">
+              Por: {DOMPurify.sanitize(post.user)}
+            </p>
             <p className="text-xs text-gray-500 mb-3">
               Criado em: {formatDate(post.date)}
             </p>
             <h2 className="text-3xl font-bold text-white mb-4">{post.title}</h2>
-            <p className="text-gray-300 mb-5">{post.summary}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: renderMarkdown(post.summary),
+              }}
+              className="text-gray-300 mb-5"
+            />
             <Link
               to={`/post/${post.id}`}
               className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center"
@@ -326,7 +356,7 @@ function Home() {
       {showLoginModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[999]">
           <div className="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-11/12 md:w-1/2 lg:w-1/3 relative z-[1000]">
-          <Loader isLoading={isLoading} />
+            <Loader isLoading={isLoading} />
             <button
               onClick={() => setShowLoginModal(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl font-bold"
@@ -343,6 +373,7 @@ function Home() {
                 <Label htmlFor="login-email" text={"Email:"} />
 
                 <Input
+                  maxLength={50}
                   type={"email"}
                   id={"login-email"}
                   placeholder={"seuemail@exemplo.com"}
@@ -353,6 +384,7 @@ function Home() {
                 <Label htmlFor={"login-password"} text={"Senha:"} />
 
                 <Input
+                  maxLength={50}
                   type={"password"}
                   id={"login-password"}
                   placeholder={"password"}
@@ -398,6 +430,7 @@ function Home() {
                 <Label htmlFor="signup-username" text={"Nome de Usuário:"} />
 
                 <Input
+                  maxLength={50}
                   type={"text"}
                   id={"signup-username"}
                   placeholder={"Seu Nome"}
@@ -407,6 +440,7 @@ function Home() {
                 <Label htmlFor="signup-email" text={"Email:"} />
 
                 <Input
+                  maxLength={50}
                   type={"email"}
                   id={"signup-email"}
                   placeholder={"seuemail@exemplo.com"}
@@ -417,6 +451,7 @@ function Home() {
                 <Label htmlFor="signup-password" text={"Senha:"} />
 
                 <Input
+                  maxLength={50}
                   type={"password"}
                   id={"signup-password"}
                   placeholder={"Password"}
@@ -430,6 +465,7 @@ function Home() {
                 />
 
                 <Input
+                  maxLength={50}
                   type={"password"}
                   id={"signup-repeated-password"}
                   placeholder={"Repeat Password"}
