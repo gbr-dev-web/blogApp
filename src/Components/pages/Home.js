@@ -16,6 +16,7 @@ import Loader from "../Loader";
 import renderMarkdown from "../RenderMarkdown";
 
 import DOMPurify from "dompurify";
+import { v4 as uuidv4 } from "uuid";
 
 function Home() {
   // "retorne o showFlash que foi compartilhado pelo FlashContext.Provider e o nomeie com o seu proprio nome"
@@ -63,6 +64,7 @@ function Home() {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     };
     return new Date(dateString).toLocaleString("pt-BR", options);
   }
@@ -158,6 +160,7 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: uuidv4(),
           username,
           email,
           password,
@@ -168,7 +171,15 @@ function Home() {
         throw new Error("Erro ao criar usuário.");
       }
 
-      localStorage.setItem("user", JSON.stringify(existingUsers[0]));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: uuidv4(),
+          username,
+          email,
+          password,
+        })
+      );
       if (localStorage.getItem("user")) {
         setIsLoggedIn(true);
       } else {
@@ -301,7 +312,9 @@ function Home() {
             <p className="text-xs text-gray-500 mb-3">
               Criado em: {formatDate(post.date)}
             </p>
-            <h2 className="text-3xl font-bold text-white mb-4">{post.title}</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">
+              {DOMPurify.sanitize(post.title)}
+            </h2>
             <p
               dangerouslySetInnerHTML={{
                 __html: renderMarkdown(post.summary),

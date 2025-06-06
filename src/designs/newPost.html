@@ -13,7 +13,7 @@
             background-color: #0f172a; /* Azul escuro quase preto */
             color: #cbd5e1; /* Cinza claro para o texto principal */
         }
-     
+      
         /* Estilos para botões de formulário, os mesmos do blog */
         .form-button {
             background-color: #4fd1c5; /* Ciano/turquesa para botões */
@@ -26,7 +26,7 @@
         .form-button:hover {
             background-color: #38b2ac; /* Tom mais escuro ao passar o mouse */
         }
-           /* --------------------- */
+            /* --------------------- */
         /* Estilos para o link de navegação */
         .nav-link {
             color: #81e6d9; /* Um tom de ciano/turquesa para links */
@@ -35,6 +35,55 @@
         }
         .nav-link:hover {
             color: #4fd1c5; /* Um tom mais escuro ao passar o mouse */
+        }
+
+        /* Estilos para o modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #1a202c; /* Cor de fundo do modal */
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            width: 700px; /* Largura máxima do modal */
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-button:hover {
+            color: #4fd1c5;
         }
     </style>
 </head>
@@ -54,17 +103,114 @@
                     <label for="post-title" class="block text-gray-300 text-sm font-bold mb-2">Título do Post:</label>
                     <input type="text" id="post-title" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Digite o título do seu post">
                 </div>
+
                 <div class="mb-4">
-                    <label for="post-summary" class="block text-gray-300 text-sm font-bold mb-2">Resumo:</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="post-summary" class="block text-gray-300 text-sm font-bold">Resumo:</label>
+                        <button type="button" id="open-summary-preview" class="text-teal-400 hover:text-teal-300 text-sm font-semibold py-1 px-2 rounded-md border border-teal-400 hover:border-teal-300 transition-colors duration-200">
+                            Ver Visualização
+                        </button>
+                    </div>
                     <textarea id="post-summary" rows="3" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Escreva um breve resumo do seu post"></textarea>
                 </div>
+
                 <div class="mb-6">
-                    <label for="post-full-content" class="block text-gray-300 text-sm font-bold mb-2">Conteúdo Completo:</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="post-full-content" class="block text-gray-300 text-sm font-bold">Conteúdo Completo:</label>
+                        <button type="button" id="open-full-content-preview" class="text-teal-400 hover:text-teal-300 text-sm font-semibold py-1 px-2 rounded-md border border-teal-400 hover:border-teal-300 transition-colors duration-200">
+                            Ver Visualização
+                        </button>
+                    </div>
                     <textarea id="post-full-content" rows="10" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Escreva o conteúdo completo do seu post aqui"></textarea>
                 </div>
+
                 <button type="submit" class="form-button w-full">Criar Post</button>
             </form>
         </main>
     </div>
+
+    <!-- Modal para visualização -->
+    <div id="preview-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button" id="close-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-white mb-4">Visualização de Conteúdo</h3>
+            <div id="markdown-preview" class="w-full p-3 rounded-lg bg-gray-700 text-white min-h-[15rem] overflow-auto whitespace-pre-wrap border border-gray-600">
+                <!-- O conteúdo do markdown aparecerá aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fullContentTextarea = document.getElementById('post-full-content');
+            const summaryTextarea = document.getElementById('post-summary');
+            const markdownPreviewDiv = document.getElementById('markdown-preview');
+            const previewModal = document.getElementById('preview-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const openSummaryPreviewButton = document.getElementById('open-summary-preview');
+            const openFullContentPreviewButton = document.getElementById('open-full-content-preview');
+
+            let currentTextarea = null; // Para saber qual textarea está sendo visualizada
+
+            // Função para abrir o modal
+            const openModal = (textareaElement) => {
+                currentTextarea = textareaElement;
+                updatePreview(); // Atualiza a visualização com o conteúdo do textarea correto
+                previewModal.classList.add('show');
+            };
+
+            // Função para fechar o modal
+            const closeModal = () => {
+                previewModal.classList.remove('show');
+                currentTextarea = null; // Limpa a referência
+            };
+
+            // Função para atualizar o conteúdo da visualização no modal
+            const updatePreview = () => {
+                if (currentTextarea && markdownPreviewDiv) {
+                    markdownPreviewDiv.textContent = currentTextarea.value;
+                }
+            };
+
+            // Event listeners para abrir o modal
+            if (openSummaryPreviewButton) {
+                openSummaryPreviewButton.addEventListener('click', () => openModal(summaryTextarea));
+            }
+            if (openFullContentPreviewButton) {
+                openFullContentPreviewButton.addEventListener('click', () => openModal(fullContentTextarea));
+            }
+
+            // Event listener para fechar o modal
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', closeModal);
+            }
+
+            // Event listener para fechar o modal clicando fora do conteúdo
+            if (previewModal) {
+                previewModal.addEventListener('click', (event) => {
+                    if (event.target === previewModal) {
+                        closeModal();
+                    }
+                });
+            }
+
+            // Adiciona um listener para atualizar a visualização em tempo real enquanto digita
+            // Isso garante que o conteúdo no modal seja atualizado mesmo se o modal estiver aberto
+            if (fullContentTextarea) {
+                fullContentTextarea.addEventListener('input', () => {
+                    if (currentTextarea === fullContentTextarea) {
+                        updatePreview();
+                    }
+                });
+            }
+            if (summaryTextarea) {
+                summaryTextarea.addEventListener('input', () => {
+                    if (currentTextarea === summaryTextarea) {
+                        updatePreview();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

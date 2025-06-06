@@ -3,6 +3,7 @@
     {
       "id": "1",
       "user": "Sofia Oliveira",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Desvendando os Mistérios da IA Generativa",
       "summary": "Uma exploração profunda sobre como a inteligência artificial generativa está moldando o futuro da criatividade e inovação em diversas áreas.",
       "date": "2025-05-31T09:00:00Z",
@@ -11,6 +12,7 @@
     {
       "id": "2",
       "user": "João Pereira",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "O Caminho para uma Vida Sustentável: Pequenas Mudanças, Grande Impacto",
       "summary": "Descubra hábitos simples e eficazes que você pode adotar hoje para contribuir com um futuro mais verde e sustentável para todos.",
       "date": "2025-05-30T14:00:00Z",
@@ -19,6 +21,7 @@
     {
       "id": "3",
       "user": "Mariana Santos",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Produtividade sem Estresse: Técnicas para Otimizar seu Dia",
       "summary": "Aprenda métodos comprovados para gerenciar seu tempo e tarefas de forma mais eficiente, reduzindo o estresse e aumentando sua produtividade.",
       "date": "2025-05-29T11:30:00Z",
@@ -27,6 +30,7 @@
     {
       "id": "4",
       "user": "Pedro Almeida",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "A Arte da Fotografia Noturna: Capturando a Magia da Escuridão",
       "summary": "Dicas e truques essenciais para fotógrafos que desejam explorar o fascinante mundo da fotografia noturna e criar imagens impressionantes.",
       "date": "2025-05-28T16:00:00Z",
@@ -35,6 +39,7 @@
     {
       "id": "5",
       "user": "Clara Rodrigues",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Bem-Estar Digital: Desconecte para Reconectar",
       "summary": "Como encontrar o equilíbrio no uso da tecnologia, promovendo a saúde mental e permitindo uma conexão mais significativa com o mundo real.",
       "date": "2025-05-27T10:45:00Z",
@@ -43,6 +48,7 @@
     {
       "id": "6",
       "user": "Ricardo Lima",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Explorando o Universo da Culinária Vegana",
       "summary": "Um guia completo para iniciantes na culinária vegana, com receitas deliciosas e dicas para uma transição suave e saborosa.",
       "date": "2025-05-26T13:00:00Z",
@@ -50,20 +56,24 @@
     },
     {
       "id": "e3d0142f-4005-4dea-95e7-e85bc9a8734b",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "user": "cghndhn",
       "title": "ssfsfs",
       "summary": "A culinária vegana vai muito além de uma dieta; é um **estilo de vida** que exclui todos os produtos de origem animal, por razões **éticas, ambientais ou de saúde**. Para muitos iniciantes, a transição pode parecer desafiadora, mas o universo da culinária vegana é vasto, delicioso e cheio de criatividade.",
       "date": "2025-06-05",
       "fullContent": "A culinária vegana vai muito além de uma dieta; é um **estilo de vida** que exclui todos os produtos de origem animal, por razões **éticas, ambientais ou de saúde**. Para muitos iniciantes, a transição pode parecer desafiadora, mas o universo da culinária vegana é vasto, delicioso e cheio de criatividade. Prepare-se para descobrir novos sabores e texturas!\n\n### Substitutos Essenciais e Base da Cozinha Vegana\n\nO primeiro passo é familiarizar-se com os principais substitutos para ingredientes de origem animal. Para carnes, explore:\n\n- Lentilha\n- Grão de bico\n- Cogumelos\n- Tofu\n- Tempeh\n- Seitan\n\nPara laticínios, há uma variedade enorme de leites vegetais — como **amêndoa, aveia e soja** — além de queijos veganos e iogurtes à base de coco ou castanhas.\n\nOvos podem ser substituídos por:\n\n- Linhaça ou chia moída (misturadas com água)\n- Banana amassada\n- Purê de maçã (em receitas de panificação)\n\nTer esses itens básicos na sua despensa facilitará muito suas primeiras aventuras culinárias veganas.\n\n### Receitas Simples para Começar e Dicas Práticas\n\nComece com receitas simples que você já conhece, mas em versão vegana. Exemplos:\n\n- Estrogonofe de cogumelos\n- Hambúrgueres de lentilha\n- Moqueca de palmito\n- Bolos feitos com leites vegetais\n\nUse e abuse de temperos e ervas frescas para realçar o sabor dos vegetais. Não tenha medo de experimentar! **Erros fazem parte do aprendizado.**\n\nProcure blogs de receitas veganas, livros de culinária e canais no YouTube dedicados a essa culinária; a comunidade é vasta e cheia de inspiração.\n\n### Nutrição e Diversidade Alimentar\n\nUma preocupação comum ao adotar uma dieta vegana é a nutrição. Uma dieta vegana **bem planejada** é perfeitamente saudável e pode ser completa.\n\nPriorize uma variedade de:\n\n- Vegetais\n- Frutas\n- Leguminosas\n- Grãos integrais\n- Nozes\n- Sementes\n\npara garantir a ingestão de todos os nutrientes essenciais.\n\nA suplementação de **vitamina B12** é geralmente recomendada, pois é a única vitamina que não é facilmente obtida em uma dieta vegana a partir de fontes vegetais.\n\nLembre-se, o objetivo é desfrutar de uma alimentação consciente, saborosa e que faça bem para você e para o planeta."
+    },
+    {
+      "id": "5a7cfda2-7303-4b57-b100-78133455a506",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "user": "gabr",
+      "title": "test",
+      "summary": "test",
+      "date": "2025-06-06",
+      "fullContent": "test"
     }
   ],
   "users": [
-    {
-      "id": "2a40",
-      "username": "cghndhn",
-      "email": "gabrielsil20177@gmail.com",
-      "password": "123123"
-    },
     {
       "id": "bd77",
       "username": "ssfs",
@@ -74,6 +84,12 @@
       "id": "d8dd",
       "username": "sssfs",
       "email": "sddd@gmail.com",
+      "password": "111"
+    },
+    {
+      "id": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "username": "gabr",
+      "email": "gabrielsil20177@gmail.com",
       "password": "111"
     }
   ]

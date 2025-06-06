@@ -83,6 +83,7 @@ function NewPost() {
 
       const post = {
         id: uuidv4(),
+        userId: user.id,
         user: user.username,
         title,
         summary,

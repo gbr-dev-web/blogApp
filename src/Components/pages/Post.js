@@ -18,6 +18,7 @@ function Post() {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     };
     return new Date(dateString).toLocaleString("pt-BR", options);
   }
