@@ -5,6 +5,7 @@ function TextArea({
   text = null,
   onChange = null,
   maxLength = null,
+  value = null,
 }) {
   return (
     <textarea
@@ -12,11 +13,11 @@ function TextArea({
       onChange={onChange}
       id={id}
       rows={rows}
-      class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 resize-none"
+      value={value}
+      className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 resize-none"
       placeholder={placeholder}
-    >
-      {text}
-    </textarea>
+    />
+      
   );
 }
 

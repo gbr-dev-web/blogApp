@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 
 import { useFlash } from "../FlashProvider";
 
+import { useNavigate } from "react-router-dom";
+
+import { FiEdit, FiTrash } from "react-icons/fi";
+
 import ReturnHome from "../ReturnHome";
 import Loader from "../Loader";
 
@@ -14,8 +18,9 @@ function MyPosts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { showFlash } = useFlash();
+  const navigate = useNavigate();
 
-   useEffect(() => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
@@ -136,15 +141,17 @@ function MyPosts() {
 
                 <div className="flex gap-2">
                   <button
-                    className="text-yellow-400 hover:text-yellow-300 font-semibold transition-colors duration-300"
-                    // onClick={() => handleEdit(post.id)}
+                    className="text-yellow-400 hover:text-yellow-300 font-semibold transition-colors duration-300 flex items-center gap-1"
+                    onClick={() => navigate(`/editpost/${post.id}`)}
                   >
-                    Editar
+                    <FiEdit className="text-yellow-400" />
+                    Editar 
                   </button>
                   <button
-                    className="text-red-400 hover:text-red-300 font-semibold transition-colors duration-300"
+                    className="text-red-400 hover:text-red-300 font-semibold transition-colors duration-300 flex items-center gap-1"
                     onClick={() => setHandleDeleteModal(post)}
                   >
+                    <FiTrash className="text-red-400" />
                     Remover
                   </button>
                 </div>

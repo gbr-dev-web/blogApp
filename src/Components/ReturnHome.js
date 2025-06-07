@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-function ReturnHome() {
+function ReturnHome({ text = "Voltar para o Blog", to = "/" }) {
   return (
     <Link
-      to={"/"}
+      to={to}
       class="text-teal-300 hover:text-teal-500 no-underline transition-colors duration-300 ease-in-out
 flex items-center gap-2"
     >
@@ -21,7 +21,7 @@ flex items-center gap-2"
           d="M10 19l-7-7m0 0l7-7m-7 7h18"
         ></path>
       </svg>
-      Voltar para o Blog
+      {text}
     </Link>
   );
 }

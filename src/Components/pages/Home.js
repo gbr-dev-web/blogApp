@@ -304,7 +304,7 @@ function Home() {
         {currentPosts.map((post) => (
           <div
             key={post.id}
-            className="bg-gray-800 p-7 rounded-xl shadow-2xl border border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-teal-500/30"
+            className="bg-gray-800 p-7 rounded-xl shadow-2xl border border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-teal-500/30 flex flex-col justify-between max-h-min[320px]"
           >
             <p className="text-sm text-gray-400 mb-1">
               Por: {DOMPurify.sanitize(post.user)}
@@ -323,7 +323,7 @@ function Home() {
             />
             <Link
               to={`/post/${post.id}`}
-              className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center"
+              className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center mt-auto"
             >
               Ler Mais{" "}
               <svg

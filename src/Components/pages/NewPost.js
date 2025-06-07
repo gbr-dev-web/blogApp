@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
-import Loader from "../Loader";
-import ReturnHome from "../ReturnHome";
-import Label from "../Label";
-import Input from "../Input";
-import TextArea from "../TextArea";
-import Button from "../Button";
-import renderMarkdown from "../RenderMarkdown";
+import PostForm from "../PostForm";
 
 import DOMPurify from "dompurify";
 import { v4 as uuidv4 } from "uuid";
@@ -23,6 +17,7 @@ function NewPost() {
   const [isLoading, setisLoading] = useState(false);
 
   // exemplo de estados no componente pai
+  const [MKtitle, setMKtitle] = useState("");
   const [MKsummary, setMKSummary] = useState("");
   const [MKfullContent, setMKFullContent] = useState("");
   const [ShowSummaryViewModal, setShowSummaryViewModal] = useState(false);
@@ -113,102 +108,21 @@ function NewPost() {
   }
 
   return (
-    <div class="container mx-auto p-4 md:p-8 max-w-3xl">
-      <Loader isLoading={isLoading} />
-      <div class="mb-8">
-        <ReturnHome />
-      </div>
-      {/* modal de diew */}
-      {(ShowSummaryViewModal || ShowContentViewModal) && (
-        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[1000] transition-opacity duration-300 ease-in-out">
-          <div class="bg-gray-900 p-8 rounded-xl shadow-2xl max-w-[90%] w-[700px] relative -translate-y-5 transition-transform duration-300 ease-in-out">
-            <button
-              onClick={() => {
-                setShowSummaryViewModal(false);
-                setShowContentViewModal(false);
-              }}
-              class="absolute top-4 right-4 bg-transparent border-none text-gray-400 text-4xl cursor-pointer transition-colors duration-300 ease-in-out hover:text-teal-400"
-            >
-              &times;
-            </button>
-            <h3 class="text-2xl font-bold text-white mb-4">
-              Visualização de Conteúdo em Markdown
-            </h3>
-
-            {ShowSummaryViewModal && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: renderMarkdown(MKsummary),
-                }}
-                class="markdown-preview w-full p-3 rounded-lg bg-gray-700 text-white min-h-[15rem] overflow-auto border border-gray-600 max-h-[60vh] overflow-y-auto"
-              />
-            )}
-            {ShowContentViewModal && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: renderMarkdown(MKfullContent),
-                }}
-                class="markdown-preview w-full p-3 rounded-lg bg-gray-700 text-white min-h-[15rem] overflow-auto border border-gray-600 max-h-[60vh] overflow-y-auto"
-              />
-            )}
-          </div>
-        </div>
-      )}
-      <main class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 w-full">
-        <h2 class="text-3xl font-bold text-white mb-6 text-center">
-          Criar Novo Post
-        </h2>
-        <form onSubmit={(e) => createPost(e)}>
-          <div class="mb-4">
-            <Label htmlFor="post-title" text={"Título do Post:"} />
-            <Input
-              type={"text"}
-              id={"post-title"}
-              placeholder={"Digite o título do seu post"}
-            />
-          </div>
-          <div class="mb-2">
-            <div class="flex items-center justify-between">
-              <Label htmlFor="post-summary" text={"Resumo:"} />
-              <button
-                onClick={() => setShowSummaryViewModal(true)}
-                type="button"
-                class="text-teal-400 hover:text-teal-300 text-sm font-semibold py-1 px-2 rounded-md border border-teal-400 hover:border-teal-300 transition-colors duration-200"
-              >
-                Visualizar
-              </button>
-            </div>
-            <TextArea
-              id={"post-summary"}
-              rows={"3"}
-              placeholder={"Escreva um breve resumo do seu post"}
-              onChange={(e) => setMKSummary(e.target.value)}
-              maxLength={"100"}
-            />
-          </div>
-          <div class="mb-4">
-            <div class="flex items-center justify-between">
-              <Label htmlFor="post-full-content" text={"Conteúdo Completo:"} />
-              <button
-                onClick={() => setShowContentViewModal(true)}
-                type="button"
-                class="text-teal-400 hover:text-teal-300 text-sm font-semibold py-1 px-2 rounded-md border border-teal-400 hover:border-teal-300 transition-colors duration-200"
-              >
-                Visualizar
-              </button>
-            </div>
-            <TextArea
-              id={"post-full-content"}
-              rows={"10"}
-              placeholder={"Escreva o conteúdo completo do seu post aqui"}
-              onChange={(e) => setMKFullContent(e.target.value)}
-              maxLength={"1000"}
-            />
-          </div>
-          <Button text={"Criar Post"} className={"w-full"} />
-        </form>
-      </main>
-    </div>
+    <PostForm
+      isLoading={isLoading}
+      title={MKtitle}
+      summary={MKsummary}
+      content={MKfullContent}
+      onChangeTitle={(e) => setMKtitle(e.target.value)}
+      onChangeSummary={(e) => setMKSummary(e.target.value)}
+      onChangeContent={(e) => setMKFullContent(e.target.value)}
+      onSubmit={createPost}
+      showSummary={ShowSummaryViewModal}
+      showContent={ShowContentViewModal}
+      setShowSummary={setShowSummaryViewModal}
+      setShowContent={setShowContentViewModal}
+      buttonText="Salvar Post"
+    />
   );
 }
 
