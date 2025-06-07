@@ -8,8 +8,8 @@ Check out the application in action by clicking the link below:
 🔗 [Watch the video on YouTube](https://www.youtube.com/watch?v=)  
 
 <div align="center">
- <img src="./src/assets/preview1.png" alt="Preview 1" width="45%" />
- <img src="./src/assets/preview1.png" alt="Preview 1" width="45%" />
+ <img src="./src/assets/home.jpeg" alt="Preview 1" width="45%" />
+ <img src="./src/assets/MyPosts.jpeg" alt="Preview 2" width="45%" />
 </div>
 
 
@@ -32,3 +32,7 @@ Check out the application in action by clicking the link below:
    - `npm install`
 4) Start the server:
    - `npm start`
+
+## Other images 
+
+<img src="./src/assets/post.jpeg" alt="Preview 3" width="45%" /> 
