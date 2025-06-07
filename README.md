@@ -5,7 +5,7 @@ The **BlogApp** is a small personal project based on an Blog, designed to help m
 
 Check out the application in action by clicking the link below:
 
-🔗 [Watch the video on YouTube](https://www.youtube.com/watch?v=)  
+🔗 [Watch the video on YouTube](https://www.youtube.com/watch?v=62KlpLh10K8)
 
 <div align="center">
  <img src="./src/assets/home.jpeg" alt="Preview 1" width="45%" />
