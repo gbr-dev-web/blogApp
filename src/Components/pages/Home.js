@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useFlash } from "../FlashProvider";
+import { useFlash } from "../flash/FlashProvider";
 import { Link, useNavigate } from "react-router-dom";
 
 // icons
@@ -9,11 +9,11 @@ import { ReactComponent as CriarPostSvg } from "../../assets/Icons/CriarPost.svg
 import { ReactComponent as MeusPostsSvg } from "../../assets/Icons/MeusPosts.svg";
 import { ReactComponent as LogoutSvg } from "../../assets/Icons/Logout.svg";
 
-import Button from "../Button";
-import Input from "../Input";
-import Label from "../Label";
-import Loader from "../Loader";
-import renderMarkdown from "../RenderMarkdown";
+import Button from "../common/Button";
+import Input from "../common/Input";
+import Label from "../common/Label";
+import Loader from "../common/Loader/Loader";
+import renderMarkdown from "../markdown/RenderMarkdown";
 
 import DOMPurify from "dompurify";
 import { v4 as uuidv4 } from "uuid";

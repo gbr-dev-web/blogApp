@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import { FlashProvider } from "./Components/FlashProvider";
+import { FlashProvider } from "./Components/flash/FlashProvider.js";
 
 import Home from "./Components/pages/Home.js";
 import Post from "./Components/pages/Post.js";

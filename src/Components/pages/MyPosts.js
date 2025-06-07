@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { useFlash } from "../FlashProvider";
+import { useFlash } from "../flash/FlashProvider";
 
 import { useNavigate } from "react-router-dom";
 
 import { FiEdit, FiTrash } from "react-icons/fi";
 
-import ReturnHome from "../ReturnHome";
-import Loader from "../Loader";
+import ReturnHome from "../common/ReturnHome";
+import Loader from "../common/Loader/Loader";
 
 import DOMPurify from "dompurify";
 import { Link } from "react-router-dom";
-import renderMarkdown from "../RenderMarkdown";
+import renderMarkdown from "../markdown/RenderMarkdown";
 
 function MyPosts() {
   const [handleDeleteModal, setHandleDeleteModal] = useState(null);
@@ -145,7 +145,7 @@ function MyPosts() {
                     onClick={() => navigate(`/editpost/${post.id}`)}
                   >
                     <FiEdit className="text-yellow-400" />
-                    Editar 
+                    Editar
                   </button>
                   <button
                     className="text-red-400 hover:text-red-300 font-semibold transition-colors duration-300 flex items-center gap-1"

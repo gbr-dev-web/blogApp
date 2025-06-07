@@ -1,11 +1,11 @@
 // src/Components/PostForm.jsx
-import Label from "./Label";
-import Input from "./Input";
-import TextArea from "./TextArea";
-import Button from "./Button";
-import renderMarkdown from "./RenderMarkdown";
-import Loader from "./Loader";
-import ReturnHome from "./ReturnHome";
+import Label from "../common/Label";
+import Input from "../common/Input";
+import TextArea from "../common/TextArea";
+import Button from "../common/Button";
+import renderMarkdown from "../markdown/RenderMarkdown";
+import Loader from "../common/Loader/Loader";
+import ReturnHome from "../common/ReturnHome";
 
 function PostForm({
   ReturnHomeText,

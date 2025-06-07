@@ -2,11 +2,11 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
-import { useFlash } from "../FlashProvider";
+import { useFlash } from "../flash/FlashProvider";
 
 import DOMPurify from "dompurify";
 
-import PostForm from "../PostForm";
+import PostForm from "../form/PostForm";
 
 function EditPost() {
   const { id } = useParams();

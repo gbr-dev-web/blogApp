@@ -1,10 +1,10 @@
-import { useFlash } from "../FlashProvider";
+import { useFlash } from "../flash/FlashProvider";
 
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
-import PostForm from "../PostForm";
+import PostForm from "../form/PostForm";
 
 import DOMPurify from "dompurify";
 import { v4 as uuidv4 } from "uuid";
