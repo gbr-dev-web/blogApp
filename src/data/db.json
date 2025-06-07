@@ -3,6 +3,7 @@
     {
       "id": "1",
       "user": "Sofia Oliveira",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Desvendando os Mistérios da IA Generativa",
       "summary": "Uma exploração profunda sobre como a inteligência artificial generativa está moldando o futuro da criatividade e inovação em diversas áreas.",
       "date": "2025-05-31T09:00:00Z",
@@ -11,6 +12,7 @@
     {
       "id": "2",
       "user": "João Pereira",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "O Caminho para uma Vida Sustentável: Pequenas Mudanças, Grande Impacto",
       "summary": "Descubra hábitos simples e eficazes que você pode adotar hoje para contribuir com um futuro mais verde e sustentável para todos.",
       "date": "2025-05-30T14:00:00Z",
@@ -19,6 +21,7 @@
     {
       "id": "3",
       "user": "Mariana Santos",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Produtividade sem Estresse: Técnicas para Otimizar seu Dia",
       "summary": "Aprenda métodos comprovados para gerenciar seu tempo e tarefas de forma mais eficiente, reduzindo o estresse e aumentando sua produtividade.",
       "date": "2025-05-29T11:30:00Z",
@@ -27,6 +30,7 @@
     {
       "id": "4",
       "user": "Pedro Almeida",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "A Arte da Fotografia Noturna: Capturando a Magia da Escuridão",
       "summary": "Dicas e truques essenciais para fotógrafos que desejam explorar o fascinante mundo da fotografia noturna e criar imagens impressionantes.",
       "date": "2025-05-28T16:00:00Z",
@@ -35,6 +39,7 @@
     {
       "id": "5",
       "user": "Clara Rodrigues",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Bem-Estar Digital: Desconecte para Reconectar",
       "summary": "Como encontrar o equilíbrio no uso da tecnologia, promovendo a saúde mental e permitindo uma conexão mais significativa com o mundo real.",
       "date": "2025-05-27T10:45:00Z",
@@ -43,38 +48,91 @@
     {
       "id": "6",
       "user": "Ricardo Lima",
+      "userId": "612e44c8-a9c9-4ca3-8caa-",
       "title": "Explorando o Universo da Culinária Vegana",
       "summary": "Um guia completo para iniciantes na culinária vegana, com receitas deliciosas e dicas para uma transição suave e saborosa.",
       "date": "2025-05-26T13:00:00Z",
       "fullContent": "# A culinária vegana vai muito além de uma dieta; é um estilo de vida que exclui todos os produtos de origem animal, por razões éticas, ambientais ou de saúde. Para muitos iniciantes, a transição pode parecer desafiadora, mas o universo da culinária vegana é vasto, delicioso e cheio de criatividade. Prepare-se para descobrir novos sabores e texturas!\n\n### Substitutos Essenciais e Base da Cozinha Vegana\n\n# O primeiro passo é familiarizar-se com os principais substitutos para ingredientes de origem animal. Para carnes, explore lentilha, grão de bico, cogumelos, tofu, tempeh e seitan. Para laticínios, há uma variedade enorme de leites vegetais (amêndoa, aveia, soja), queijos veganos e iogurtes à base de coco ou castanhas. Ovos podem ser substituídos por linhaça ou chia moída (misturadas com água), banana amassada ou purê de maçã em receitas de panificação. Ter esses itens básicos na sua despensa facilitará muito suas primeiras aventuras culinárias veganas.\n\n### Receitas Simples para Começar e Dicas Práticas\n\nComece com receitas simples que você já conhece, mas em versão vegana. Um estrogonofe de cogumelos, hambúrgueres de lentilha, moqueca de palmito, ou bolos feitos com leites vegetais são ótimos pontos de partida. Use e abuse de temperos e ervas frescas para realçar o sabor dos vegetais. Não tenha medo de experimentar! Erros fazem parte do aprendizado. Procure blogs de receitas veganas, livros de culinária e canais no YouTube dedicados a essa culinária; a comunidade é vasta e cheia de inspiração.\n\n### Nutrição e Diversidade Alimentar\n\nUma preocupação comum ao adotar uma dieta vegana é a nutrição. Uma dieta vegana bem planejada é perfeitamente saudável e pode ser completa. Priorize uma variedade de vegetais, frutas, leguminosas, grãos integrais, nozes e sementes para garantir a ingestão de todos os nutrientes essenciais. A suplementação de B12 é geralmente recomendada, pois é a única vitamina que não é facilmente obtida em uma dieta vegana a partir de fontes vegetais. Lembre-se, o objetivo é desfrutar de uma alimentação consciente, saborosa e que faça bem para você e para o planeta."
     },
     {
-      "id": "e3d0142f-4005-4dea-95e7-e85bc9a8734b",
-      "user": "cghndhn",
-      "title": "ssfsfs",
-      "summary": "A culinária vegana vai muito além de uma dieta; é um **estilo de vida** que exclui todos os produtos de origem animal, por razões **éticas, ambientais ou de saúde**. Para muitos iniciantes, a transição pode parecer desafiadora, mas o universo da culinária vegana é vasto, delicioso e cheio de criatividade.",
-      "date": "2025-06-05",
-      "fullContent": "A culinária vegana vai muito além de uma dieta; é um **estilo de vida** que exclui todos os produtos de origem animal, por razões **éticas, ambientais ou de saúde**. Para muitos iniciantes, a transição pode parecer desafiadora, mas o universo da culinária vegana é vasto, delicioso e cheio de criatividade. Prepare-se para descobrir novos sabores e texturas!\n\n### Substitutos Essenciais e Base da Cozinha Vegana\n\nO primeiro passo é familiarizar-se com os principais substitutos para ingredientes de origem animal. Para carnes, explore:\n\n- Lentilha\n- Grão de bico\n- Cogumelos\n- Tofu\n- Tempeh\n- Seitan\n\nPara laticínios, há uma variedade enorme de leites vegetais — como **amêndoa, aveia e soja** — além de queijos veganos e iogurtes à base de coco ou castanhas.\n\nOvos podem ser substituídos por:\n\n- Linhaça ou chia moída (misturadas com água)\n- Banana amassada\n- Purê de maçã (em receitas de panificação)\n\nTer esses itens básicos na sua despensa facilitará muito suas primeiras aventuras culinárias veganas.\n\n### Receitas Simples para Começar e Dicas Práticas\n\nComece com receitas simples que você já conhece, mas em versão vegana. Exemplos:\n\n- Estrogonofe de cogumelos\n- Hambúrgueres de lentilha\n- Moqueca de palmito\n- Bolos feitos com leites vegetais\n\nUse e abuse de temperos e ervas frescas para realçar o sabor dos vegetais. Não tenha medo de experimentar! **Erros fazem parte do aprendizado.**\n\nProcure blogs de receitas veganas, livros de culinária e canais no YouTube dedicados a essa culinária; a comunidade é vasta e cheia de inspiração.\n\n### Nutrição e Diversidade Alimentar\n\nUma preocupação comum ao adotar uma dieta vegana é a nutrição. Uma dieta vegana **bem planejada** é perfeitamente saudável e pode ser completa.\n\nPriorize uma variedade de:\n\n- Vegetais\n- Frutas\n- Leguminosas\n- Grãos integrais\n- Nozes\n- Sementes\n\npara garantir a ingestão de todos os nutrientes essenciais.\n\nA suplementação de **vitamina B12** é geralmente recomendada, pois é a única vitamina que não é facilmente obtida em uma dieta vegana a partir de fontes vegetais.\n\nLembre-se, o objetivo é desfrutar de uma alimentação consciente, saborosa e que faça bem para você e para o planeta."
+      "id": "73e99b2c",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "A Arte de Fazer Pão em Casa",
+      "summary": "Descubra os segredos da panificação caseira, com receitas simples de pães artesanais e dicas para acertar no ponto da massa.",
+      "date": "2025-04-15T10:30:00Z",
+      "fullContent": "# Fazer pão em casa é uma experiência gratificante que envolve paciência, técnica e muito sabor. Desde o aroma que invade a cozinha até o prazer de saborear algo feito por você, a panificação artesanal oferece uma conexão especial com o alimento.\n\n### Ingredientes e Equipamentos Básicos\n\nVocê vai precisar de farinha de boa qualidade (preferencialmente tipo 1 ou 00), fermento biológico (seco ou fresco), sal, água e, em alguns casos, açúcar ou gordura vegetal. Uma balança, uma tigela grande, uma espátula e um forno com boa potência são suficientes para começar.\n\n### Técnicas Essenciais\n\nA autólise, a sova e as dobras são etapas importantes para desenvolver o glúten e obter uma boa estrutura. A fermentação lenta (com descanso na geladeira) ajuda a intensificar o sabor e melhorar a textura. Experimente receitas de pão italiano, integral ou focaccia para começar.\n\n### Dicas Finais\n\nEvite excesso de farinha ao sovar, respeite os tempos de fermentação e aprenda com os erros. A cada fornada, sua técnica melhora. Panificação é um processo contínuo de aprendizado!"
+    },
+    {
+      "id": "c52877ac",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "Minimalismo Digital: Como Reduzir o Ruído Online",
+      "summary": "Explore práticas para ter uma vida digital mais consciente, com menos distrações e mais foco no que realmente importa.",
+      "date": "2025-03-10T08:45:00Z",
+      "fullContent": "# O minimalismo digital é uma abordagem que propõe o uso consciente da tecnologia, priorizando ferramentas que agregam valor real ao seu dia. Em vez de abandonar tudo, trata-se de fazer escolhas intencionais sobre onde colocar sua atenção.\n\n### Avaliação e Desintoxicação\n\nComece fazendo um inventário dos apps e redes sociais que você usa. Quais realmente ajudam no seu dia a dia? Quais só servem para ocupar tempo? Experimente uma desintoxicação digital de 7 dias para sentir os efeitos da ausência.\n\n### Substituição e Reorganização\n\nTroque apps viciantes por alternativas mais saudáveis: podcasts, leitura offline ou journaling. Organize sua tela inicial apenas com apps essenciais. Ative notificações seletivamente.\n\n### Benefícios Visíveis\n\nMenos ansiedade, mais foco e produtividade, melhor sono e relações mais presentes são só alguns dos ganhos. O minimalismo digital não é sobre privação — é sobre liberdade."
+    },
+    {
+      "id": "39dfe8b7",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "Começando na Meditação: Guia para Iniciantes",
+      "summary": "Um passo a passo simples para quem deseja começar a meditar e encontrar mais equilíbrio na rotina.",
+      "date": "2025-06-03T17:00:00Z",
+      "fullContent": "# A meditação é uma prática milenar que ajuda a acalmar a mente, aumentar a concentração e reduzir o estresse. E o melhor: qualquer pessoa pode começar com poucos minutos por dia.\n\n### Escolha o Estilo Certo para Você\n\nMeditação guiada, mindfulness, foco na respiração ou repetições de mantras. Teste diferentes abordagens e veja qual se adapta melhor ao seu estilo de vida e personalidade.\n\n### Crie um Espaço e uma Rotina\n\nEscolha um local calmo, sente-se confortavelmente e comece com 5 minutos por dia. O importante é a constância, não a duração. Use aplicativos como Insight Timer ou Headspace se quiser apoio.\n\n### Dicas Práticas\n\nNão se cobre tanto. A mente vai divagar — apenas perceba e volte à respiração. Com o tempo, você vai notar mais clareza, calma e presença nas suas atividades diárias."
+    },
+    {
+      "id": "87ba13d4",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "Como Criar um Cantinho de Leitura em Casa",
+      "summary": "Transforme um espaço pequeno em um refúgio aconchegante para leituras, estudo ou momentos de silêncio.",
+      "date": "2025-01-20T15:15:00Z",
+      "fullContent": "# Ter um cantinho de leitura em casa é uma maneira simples de incentivar o hábito da leitura e ter um local de descanso mental. Mesmo pequenos espaços podem se transformar em refúgios inspiradores.\n\n### O que é Essencial\n\nEscolha um local com boa iluminação natural, uma cadeira confortável, uma mesinha ou apoio lateral e, se possível, um ponto silencioso da casa. Capriche na decoração com almofadas, mantas e objetos que tragam aconchego.\n\n### Organização e Acessibilidade\n\nTenha seus livros favoritos por perto, talvez em uma estante pequena ou cestos decorativos. Plantas e quadros com frases inspiradoras também ajudam a criar o clima.\n\n### Torne um Hábito\n\nReserve horários específicos do dia para ir ao cantinho. Ler por 20 minutos antes de dormir ou ao acordar pode melhorar seu bem-estar geral e estimular a concentração."
+    },
+    {
+      "id": "aa91f3e9",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "Fotografia com Celular: Dicas para Fotos Incríveis",
+      "summary": "Aprenda técnicas simples para melhorar suas fotos usando apenas o celular — enquadramento, luz e edição rápida.",
+      "date": "2025-02-14T11:40:00Z",
+      "fullContent": "# A câmera do seu celular pode fazer fotos incríveis se usada com criatividade. Hoje, os smartphones têm recursos avançados que permitem capturar momentos de forma prática e com qualidade impressionante.\n\n### Luz é Tudo\n\nPrefira sempre luz natural. Fotografe próximo a janelas ou ao ar livre. Luz suave (como ao amanhecer ou entardecer) gera melhores resultados que luz direta e forte.\n\n### Composição e Enquadramento\n\nUse a regra dos terços, linhas guia e explore ângulos diferentes. Evite centralizar tudo. A simetria e os padrões também rendem boas imagens.\n\n### Edição sem Exagero\n\nUse apps como Snapseed, Lightroom Mobile ou VSCO para ajustar brilho, contraste, saturação e nitidez. Evite filtros muito pesados — o natural geralmente funciona melhor."
+    },
+    {
+      "id": "f001c3a2",
+      "user": "Gabriel",
+      "userId": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "title": "Como Cuidar de Plantas em Apartamento",
+      "summary": "Um guia para iniciantes com as melhores plantas para espaços internos, dicas de rega, iluminação e cuidados básicos.",
+      "date": "2025-05-05T09:25:00Z",
+      "fullContent": "# Ter plantas em casa melhora a qualidade do ar, o humor e traz mais vida ao ambiente. Mesmo em apartamentos pequenos, é possível cultivar uma bela coleção verde.\n\n### Plantas Fáceis para Começar\n\nJiboia, espada-de-são-jorge, zamioculca, suculentas e lírio-da-paz são ótimas opções para ambientes internos. São resistentes, bonitas e exigem poucos cuidados.\n\n### Rega e Iluminação\n\nEvite excesso de água. O solo deve secar parcialmente antes da próxima rega. Posicione as plantas perto de janelas com luz indireta. Se não tiver muita luz, opte por espécies mais tolerantes à sombra.\n\n### Cuidados Gerais\n\nLimpe as folhas com pano úmido, observe sinais de pragas e adube a cada dois meses. Ter plantas é uma forma de se conectar com a natureza e com o momento presente, mesmo na rotina urbana."
     }
   ],
   "users": [
-    {
-      "id": "2a40",
-      "username": "cghndhn",
-      "email": "gabrielsil20177@gmail.com",
-      "password": "123123"
-    },
-    {
-      "id": "bd77",
-      "username": "ssfs",
-      "email": "ws4t20177@gmail.com",
-      "password": "111"
-    },
     {
       "id": "d8dd",
       "username": "sssfs",
       "email": "sddd@gmail.com",
       "password": "111"
+    },
+    {
+      "id": "612e44c8-a9c9-4ca3-8caa-f9909061de03",
+      "username": "Gabriel",
+      "email": "gabrielsil20177@gmail.com",
+      "password": "111"
+    },
+    {
+      "id": "ff1b9093-c663-4d82-b3bb-fca1207feb7f",
+      "username": "ssfs",
+      "email": "gabrielsil33320177@gmail.com",
+      "password": "111"
+    },
+    {
+      "id": "38d4784b-cf74-4029-adc7-381c10847545",
+      "username": "gabriel",
+      "email": "ws4t20177@gmail.com",
+      "password": "123123"
     }
   ]
 }

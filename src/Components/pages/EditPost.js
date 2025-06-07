@@ -1,15 +1,16 @@
+import { useParams, useNavigate } from "react-router-dom";
+
+import { useEffect, useState } from "react";
+
 import { useFlash } from "../flash/FlashProvider";
 
-import { useNavigate } from "react-router-dom";
-
-import { useState } from "react";
+import DOMPurify from "dompurify";
 
 import PostForm from "../form/PostForm";
 
-import DOMPurify from "dompurify";
-import { v4 as uuidv4 } from "uuid";
+function EditPost() {
+  const { id } = useParams();
 
-function NewPost() {
   const { showFlash } = useFlash();
 
   const navigate = useNavigate();
@@ -23,7 +24,21 @@ function NewPost() {
   const [ShowSummaryViewModal, setShowSummaryViewModal] = useState(false);
   const [ShowContentViewModal, setShowContentViewModal] = useState(false);
 
-  async function createPost(e) {
+  useEffect(() => {
+    setisLoading(true);
+    async function fetchPost() {
+      const response = await fetch(`http://localhost:3001/blogPosts/${id}`);
+      const data = await response.json();
+      console.log(data.title);
+      setMKtitle(data.title);
+      setMKSummary(data.summary);
+      setMKFullContent(data.fullContent);
+      setisLoading(false);
+    }
+    fetchPost();
+  }, [id]);
+
+  async function editPost(e) {
     e.preventDefault();
 
     try {
@@ -62,9 +77,7 @@ function NewPost() {
 
       const title = DOMPurify.sanitize(rawTitle, config);
       const summary = DOMPurify.sanitize(rawSummary, config);
-      const content = DOMPurify.sanitize(rawContent, config);
-
-      const date = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD
+      const fullContent = DOMPurify.sanitize(rawContent, config);
 
       const user = JSON.parse(localStorage.getItem("user"));
 
@@ -72,43 +85,40 @@ function NewPost() {
         throw new Error("Usuário não autenticado!, faça login!");
       }
 
-      if (!title || !summary || !content) {
+      if (!title || !summary || !fullContent) {
         throw new Error("Preencha todos os campos!");
       }
 
-      const post = {
-        id: uuidv4(),
-        userId: user.id,
-        user: user.username,
+      const editedPost = {
         title,
         summary,
-        date,
-        fullContent: content,
+        fullContent,
       };
 
-      const postPost = await fetch("http://localhost:3001/blogPosts", {
-        method: "POST",
+      const editPost = await fetch(`http://localhost:3001/blogPosts/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(post),
+        body: JSON.stringify(editedPost),
       });
 
-      if (!postPost.ok) {
-        throw new Error("Erro ao criar post!");
+      if (!editPost.ok) {
+        throw new Error("Erro ao editar post!");
       }
-      navigate("/");
-      showFlash("success", "Post criado com sucesso!", 4000);
+      navigate("/meusposts");
+      showFlash("success", "Post editado com sucesso!", 4000);
     } catch (err) {
       console.log(err);
-      showFlash("error", err.message || "Erro ao criar post!");
+      showFlash("error", err.message || "Erro ao editar post!");
     } finally {
       setisLoading(false);
     }
   }
-
   return (
     <PostForm
+      ReturnHomeTo="/meusposts"
+      ReturnHomeText="Voltar para meus posts"
       isLoading={isLoading}
       title={MKtitle}
       summary={MKsummary}
@@ -116,14 +126,14 @@ function NewPost() {
       onChangeTitle={(e) => setMKtitle(e.target.value)}
       onChangeSummary={(e) => setMKSummary(e.target.value)}
       onChangeContent={(e) => setMKFullContent(e.target.value)}
-      onSubmit={createPost}
+      onSubmit={editPost}
       showSummary={ShowSummaryViewModal}
       showContent={ShowContentViewModal}
       setShowSummary={setShowSummaryViewModal}
       setShowContent={setShowContentViewModal}
-      buttonText="Salvar Post"
+      buttonText="Salvar alterações"
     />
   );
 }
 
-export default NewPost;
+export default EditPost;

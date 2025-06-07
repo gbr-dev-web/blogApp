@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 
-import ReturnHome from "../ReturnHome";
+import ReturnHome from "../common/ReturnHome";
 
 import db from "../../data/db.json";
 
 import DOMPurify from "dompurify";
 
-import renderMarkdown from "../RenderMarkdown";
+import renderMarkdown from "../markdown/RenderMarkdown";
 function Post() {
   const { id } = useParams();
 
@@ -18,6 +18,7 @@ function Post() {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     };
     return new Date(dateString).toLocaleString("pt-BR", options);
   }

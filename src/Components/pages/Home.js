@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useFlash } from "../FlashProvider";
+import { useFlash } from "../flash/FlashProvider";
 import { Link, useNavigate } from "react-router-dom";
 
 // icons
@@ -9,13 +9,14 @@ import { ReactComponent as CriarPostSvg } from "../../assets/Icons/CriarPost.svg
 import { ReactComponent as MeusPostsSvg } from "../../assets/Icons/MeusPosts.svg";
 import { ReactComponent as LogoutSvg } from "../../assets/Icons/Logout.svg";
 
-import Button from "../Button";
-import Input from "../Input";
-import Label from "../Label";
-import Loader from "../Loader";
-import renderMarkdown from "../RenderMarkdown";
+import Button from "../common/Button";
+import Input from "../common/Input";
+import Label from "../common/Label";
+import Loader from "../common/Loader/Loader";
+import renderMarkdown from "../markdown/RenderMarkdown";
 
 import DOMPurify from "dompurify";
+import { v4 as uuidv4 } from "uuid";
 
 function Home() {
   // "retorne o showFlash que foi compartilhado pelo FlashContext.Provider e o nomeie com o seu proprio nome"
@@ -63,6 +64,7 @@ function Home() {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     };
     return new Date(dateString).toLocaleString("pt-BR", options);
   }
@@ -158,6 +160,7 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: uuidv4(),
           username,
           email,
           password,
@@ -168,7 +171,15 @@ function Home() {
         throw new Error("Erro ao criar usuário.");
       }
 
-      localStorage.setItem("user", JSON.stringify(existingUsers[0]));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: uuidv4(),
+          username,
+          email,
+          password,
+        })
+      );
       if (localStorage.getItem("user")) {
         setIsLoggedIn(true);
       } else {
@@ -192,6 +203,7 @@ function Home() {
       // Sanitiza inputs
       const email = DOMPurify.sanitize(e.target["login-email"].value.trim());
       const password = DOMPurify.sanitize(e.target["login-password"].value);
+      console.log(password)
 
       // Validação simples
       if (!email || !password) {
@@ -293,7 +305,7 @@ function Home() {
         {currentPosts.map((post) => (
           <div
             key={post.id}
-            className="bg-gray-800 p-7 rounded-xl shadow-2xl border border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-teal-500/30"
+            className="bg-gray-800 p-7 rounded-xl shadow-2xl border border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-teal-500/30 flex flex-col justify-between max-h-min[320px]"
           >
             <p className="text-sm text-gray-400 mb-1">
               Por: {DOMPurify.sanitize(post.user)}
@@ -301,7 +313,9 @@ function Home() {
             <p className="text-xs text-gray-500 mb-3">
               Criado em: {formatDate(post.date)}
             </p>
-            <h2 className="text-3xl font-bold text-white mb-4">{post.title}</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">
+              {DOMPurify.sanitize(post.title)}
+            </h2>
             <p
               dangerouslySetInnerHTML={{
                 __html: renderMarkdown(post.summary),
@@ -310,7 +324,7 @@ function Home() {
             />
             <Link
               to={`/post/${post.id}`}
-              className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center"
+              className="text-teal-300 no-underline transition-colors duration-300 hover:text-teal-400 font-semibold inline-flex items-center mt-auto"
             >
               Ler Mais{" "}
               <svg
