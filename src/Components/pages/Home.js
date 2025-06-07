@@ -203,6 +203,7 @@ function Home() {
       // Sanitiza inputs
       const email = DOMPurify.sanitize(e.target["login-email"].value.trim());
       const password = DOMPurify.sanitize(e.target["login-password"].value);
+      console.log(password)
 
       // Validação simples
       if (!email || !password) {
